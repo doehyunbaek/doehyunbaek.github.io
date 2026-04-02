@@ -1,0 +1,45 @@
+---
+---
+
+@import "{{ site.theme }}";
+@import "fork-awesome.min.css";
+
+/* Don't make links bold when hovering, underline instead */
+a:hover, a:focus {
+  font-weight: unset;
+  text-decoration: underline;
+}
+
+header .profile-summary .main-info p {
+  margin-top: 0;
+}
+
+@media screen and (max-width: 500px) {
+  header .profile-summary {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    align-items: start;
+    column-gap: 12px;
+    row-gap: 12px;
+    width: 100%;
+  }
+
+  header .profile-summary .avatar {
+    width: 100px;
+    max-width: 100px;
+    height: auto;
+    margin: 0;
+  }
+
+  header .profile-summary .main-info {
+    min-width: 0;
+  }
+
+  header .profile-summary .main-info p {
+    margin: 0;
+  }
+
+  header .profile-summary .full-width {
+    grid-column: 1 / -1;
+  }
+}

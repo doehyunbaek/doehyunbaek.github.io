@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting…</title>
+    <meta name="robots" content="noindex" />
+
+    <!-- Compute the previous year-month (YYYY-MM), insert canonical/meta-refresh,
+         and redirect via location.replace for clean navigation. -->
+    <script>
+      (function () {
+        // compute previous year-month in local time
+        const now = new Date();
+        const prev = new Date(now.getFullYear(), now.getMonth() - 1, 1); // handles Jan -> Dec of previous year
+        const year = prev.getFullYear();
+        const month = String(prev.getMonth() + 1).padStart(2, "0"); // months are 0-based
+        const arxivUrl = `https://arxiv.org/list/cs.SE/${year}-${month}?skip=0&show=2000`;
+
+        // add canonical link element
+        const link = document.createElement("link");
+        link.rel = "canonical";
+        link.href = arxivUrl;
+        document.head.appendChild(link);
+
+        // add meta-refresh (some user agents honor it)
+        const meta = document.createElement("meta");
+        meta.httpEquiv = "refresh";
+        meta.content = `0; url=${arxivUrl}`;
+        document.head.appendChild(meta);
+
+        // perform a programmatic redirect (preferred)
+        window.location.replace(arxivUrl);
+      })();
+    </script>
+  </head>
+
+  <body>
+    <p>
+      Redirecting to the <strong>previous month's</strong> cs.SE arXiv listing…
+      <span id="link-placeholder">If you are not redirected, <a id="manual-link" href="https://arxiv.org/list/cs.SE/recent">click here</a>.</span>
+    </p>
+
+    <noscript>
+      <p>
+        JavaScript is disabled in your browser. You can manually visit the cs.SE listings page:
+        <a href="https://arxiv.org/list/cs.SE/recent">https://arxiv.org/list/cs.SE/recent</a>
+        (the page above lists recent months).
+      </p>
+    </noscript>
+
+    <script>
+      // Update the inline fallback link text/href so users who disable immediate redirects see the correct target
+      try {
+        const now = new Date();
+        const prev = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+        const year = prev.getFullYear();
+        const month = String(prev.getMonth() + 1).padStart(2, "0");
+        const arxivUrl = `https://arxiv.org/list/cs.SE/${year}-${month}?skip=0&show=2000`;
+        const a = document.getElementById("manual-link");
+        if (a) {
+          a.href = arxivUrl;
+          a.textContent = arxivUrl;
+        }
+      } catch (e) {
+        // ignore; fallback link remains the generic "recent" page
+      }
+    </script>
+  </body>
+</html>
