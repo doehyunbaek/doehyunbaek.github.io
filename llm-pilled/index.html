@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LLM in 2025 Conference Titles</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f8fb;
+      --panel: #ffffff;
+      --text: #172033;
+      --muted: #687386;
+      --line: #e2e7f0;
+      --count: #2f80ed;
+      --count-soft: #d9eaff;
+      --share: #9b51e0;
+      --share-soft: #eadbff;
+      --shadow: 0 16px 40px rgba(23, 32, 51, 0.08);
+      --radius: 18px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(47, 128, 237, 0.18), transparent 34rem),
+        radial-gradient(circle at top right, rgba(155, 81, 224, 0.14), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+    }
+
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 44px 0 56px;
+    }
+
+    header {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4.25rem);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+    }
+
+    .lede {
+      max-width: 860px;
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.7vw, 1.16rem);
+      line-height: 1.55;
+    }
+
+    .status-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: #27ae60;
+      box-shadow: 0 0 0 5px rgba(39, 174, 96, 0.12);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin: 24px 0;
+    }
+
+    .card, .panel {
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid rgba(226, 231, 240, 0.92);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .card {
+      padding: 18px 18px 16px;
+    }
+
+    .card .label {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .card .value {
+      margin-top: 7px;
+      font-size: clamp(1.65rem, 3vw, 2.5rem);
+      font-weight: 850;
+      letter-spacing: -0.04em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .panel {
+      overflow: hidden;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      gap: 12px;
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    label.control {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    select, input[type="search"] {
+      min-height: 40px;
+      border: 1px solid #d7deea;
+      border-radius: 12px;
+      background: #fff;
+      color: var(--text);
+      padding: 0 12px;
+      font: inherit;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    input[type="search"] { width: min(280px, 70vw); }
+
+    select:focus, input[type="search"]:focus {
+      border-color: var(--count);
+      box-shadow: 0 0 0 4px rgba(47, 128, 237, 0.14);
+    }
+
+    .checkbox-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 40px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 650;
+      margin-left: auto;
+    }
+
+    .legend {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      padding: 0 18px 18px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+    }
+
+    .swatch {
+      width: 22px;
+      height: 10px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    .swatch.count { background: linear-gradient(90deg, var(--count), #7cb7ff); }
+    .swatch.share { background: linear-gradient(90deg, var(--share), #d6a5ff); }
+
+    .chart {
+      padding: 8px 18px 18px;
+    }
+
+    .chart-header, .row {
+      display: grid;
+      grid-template-columns: minmax(155px, 1.05fr) minmax(190px, 1.45fr) minmax(190px, 1.45fr) minmax(88px, 0.45fr);
+      gap: 14px;
+      align-items: center;
+    }
+
+    .chart-header {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      padding: 12px 0 10px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid var(--line);
+      font-size: 0.76rem;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .row {
+      min-height: 48px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(226, 231, 240, 0.72);
+    }
+
+    .row:last-child { border-bottom: 0; }
+
+    .conference {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: 850;
+      letter-spacing: -0.015em;
+    }
+
+    .area {
+      flex: 0 0 auto;
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: color-mix(in srgb, var(--area-color) 15%, white);
+      border: 1px solid color-mix(in srgb, var(--area-color) 28%, white);
+      color: color-mix(in srgb, var(--area-color) 72%, #172033);
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .bar-cell {
+      position: relative;
+      min-height: 28px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #edf1f7;
+    }
+
+    .bar-cell::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(23, 32, 51, 0.06);
+      border-radius: inherit;
+      pointer-events: none;
+    }
+
+    .bar {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: var(--w, 0%);
+      border-radius: inherit;
+      min-width: var(--minw, 0px);
+    }
+
+    .bar.count { background: linear-gradient(90deg, var(--count), #7cb7ff); }
+    .bar.share { background: linear-gradient(90deg, var(--share), #d6a5ff); }
+
+    .bar-value {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: 28px;
+      padding: 0 10px;
+      font-weight: 850;
+      font-size: 0.9rem;
+      font-variant-numeric: tabular-nums;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.55);
+    }
+
+    .share-value { color: #3f205f; }
+
+    .total {
+      color: var(--muted);
+      font-size: 0.86rem;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .empty {
+      padding: 42px 18px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .note {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    @supports not (color: color-mix(in srgb, red, white)) {
+      .area { background: #f2f4f8; border-color: #e2e7f0; color: #536071; }
+    }
+
+    @media (max-width: 880px) {
+      .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .chart-header { display: none; }
+      .row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 14px 0;
+      }
+      .bar-cell::before {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1;
+        color: rgba(23, 32, 51, 0.58);
+        font-size: 0.74rem;
+        font-weight: 850;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .count-cell::before { content: "count"; }
+      .share-cell::before { content: "share"; }
+      .total { text-align: left; }
+      .checkbox-control { margin-left: 0; }
+    }
+
+    @media (max-width: 560px) {
+      main { width: min(100% - 22px, 1180px); padding-top: 28px; }
+      .cards { grid-template-columns: 1fr; }
+      .toolbar { align-items: stretch; }
+      label.control, select, input[type="search"] { width: 100%; }
+      .legend { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>How LLM-pilled are 2025 conference titles?</h1>
+      <p class="lede" id="lede">Visualizing papers whose titles contain “LLM” by conference: absolute count and share of all collected titles.</p>
+      <div class="status-line"><span class="status-dot"></span><span id="load-status">Loading data…</span></div>
+    </header>
+
+    <section class="cards" id="cards" aria-label="Dataset summary"></section>
+
+    <section class="panel" aria-label="Conference chart">
+      <div class="toolbar">
+        <label class="control">View
+          <select id="view-mode">
+            <option value="conference">Conferences</option>
+            <option value="area">Research areas aggregated</option>
+          </select>
+        </label>
+        <label class="control">Sort
+          <select id="sort">
+            <option value="share-desc">LLM title share ↓</option>
+            <option value="count-desc">LLM title count ↓</option>
+            <option value="total-desc">Total papers ↓</option>
+            <option value="conference-asc">Name A–Z</option>
+            <option value="area-asc">Area, then share ↓</option>
+          </select>
+        </label>
+        <label class="control">Area
+          <select id="area-filter">
+            <option value="all">All areas</option>
+          </select>
+        </label>
+        <label class="control">Search
+          <input id="search" type="search" placeholder="conference or area" autocomplete="off" />
+        </label>
+        <label class="checkbox-control">
+          <input id="hide-empty" type="checkbox" checked />
+          Hide conferences with no 2025 titles
+        </label>
+      </div>
+      <div class="legend">
+        <span class="legend-item"><span class="swatch count"></span>titles_with_llm_count</span>
+        <span class="legend-item"><span class="swatch share"></span>llm_title_share</span>
+      </div>
+      <div class="chart" id="chart"></div>
+    </section>
+
+    <p class="note" id="note"></p>
+  </main>
+
+  <script id="fallback-data" type="application/json">{"year":2025,"metric":"case-insensitive substring match for 'LLM' in 2025 publication titles","source_note":"Primary source is DBLP publication API, queried by table-of-contents facet or stream/year facet. Official conference pages are used where DBLP is missing/late. Non-main workshops/companions/findings/adjunct pages are excluded when sources expose them separately.","summary":{"conference_count":77,"completed_count":77,"ok_count":76,"error_count":0,"total_titles":44445,"titles_with_llm_count":3170,"llm_occurrences_in_titles":3305,"llm_title_share":0.0713241084486444},"conferences":[{"conference":"aaai","area":"ai","year":2025,"status":"ok","total_titles":3487,"titles_with_llm_count":157,"llm_title_share":0.045024376254660166},{"conference":"ijcai","area":"ai","year":2025,"status":"ok","total_titles":1280,"titles_with_llm_count":63,"llm_title_share":0.04921875},{"conference":"cvpr","area":"vision","year":2025,"status":"ok","total_titles":2872,"titles_with_llm_count":69,"llm_title_share":0.02402506963788301},{"conference":"eccv","area":"vision","year":2025,"status":"no_2025_found","total_titles":0,"titles_with_llm_count":0,"llm_title_share":null},{"conference":"iccv","area":"vision","year":2025,"status":"ok","total_titles":2702,"titles_with_llm_count":77,"llm_title_share":0.02849740932642487},{"conference":"icml","area":"mlmining","year":2025,"status":"ok","total_titles":3258,"titles_with_llm_count":223,"llm_title_share":0.06844689993861265},{"conference":"iclr","area":"mlmining","year":2025,"status":"ok","total_titles":3705,"titles_with_llm_count":301,"llm_title_share":0.08124156545209177},{"conference":"kdd","area":"mlmining","year":2025,"status":"ok","total_titles":846,"titles_with_llm_count":50,"llm_title_share":0.0591016548463357},{"conference":"nips","area":"mlmining","year":2025,"status":"ok","total_titles":5858,"titles_with_llm_count":477,"llm_title_share":0.08142710822806419},{"conference":"acl","area":"nlp","year":2025,"status":"ok","total_titles":1973,"titles_with_llm_count":427,"llm_title_share":0.21642169285352256},{"conference":"emnlp","area":"nlp","year":2025,"status":"ok","total_titles":1810,"titles_with_llm_count":431,"llm_title_share":0.23812154696132598},{"conference":"naacl","area":"nlp","year":2025,"status":"ok","total_titles":855,"titles_with_llm_count":163,"llm_title_share":0.19064327485380117},{"conference":"sigir","area":"inforet","year":2025,"status":"ok","total_titles":541,"titles_with_llm_count":68,"llm_title_share":0.1256931608133087},{"conference":"www","area":"inforet","year":2025,"status":"ok","total_titles":448,"titles_with_llm_count":26,"llm_title_share":0.05803571428571429},{"conference":"asplos","area":"arch","year":2025,"status":"ok","total_titles":182,"titles_with_llm_count":14,"llm_title_share":0.07692307692307693},{"conference":"isca","area":"arch","year":2025,"status":"ok","total_titles":136,"titles_with_llm_count":10,"llm_title_share":0.07352941176470588},{"conference":"micro","area":"arch","year":2025,"status":"ok","total_titles":124,"titles_with_llm_count":12,"llm_title_share":0.0967741935483871},{"conference":"hpca","area":"arch","year":2025,"status":"ok","total_titles":122,"titles_with_llm_count":12,"llm_title_share":0.09836065573770492},{"conference":"ccs","area":"sec","year":2025,"status":"ok","total_titles":396,"titles_with_llm_count":13,"llm_title_share":0.03282828282828283},{"conference":"oakland","area":"sec","year":2025,"status":"ok","total_titles":256,"titles_with_llm_count":7,"llm_title_share":0.02734375},{"conference":"usenixsec","area":"sec","year":2025,"status":"ok","total_titles":440,"titles_with_llm_count":34,"llm_title_share":0.07727272727272727},{"conference":"ndss","area":"sec","year":2025,"status":"ok","total_titles":212,"titles_with_llm_count":9,"llm_title_share":0.04245283018867924},{"conference":"vldb","area":"mod","year":2025,"status":"ok","total_titles":484,"titles_with_llm_count":22,"llm_title_share":0.045454545454545456},{"conference":"sigmod","area":"mod","year":2025,"status":"ok","total_titles":411,"titles_with_llm_count":23,"llm_title_share":0.05596107055961071},{"conference":"icde","area":"mod","year":2025,"status":"ok","total_titles":399,"titles_with_llm_count":10,"llm_title_share":0.02506265664160401},{"conference":"pods","area":"mod","year":2025,"status":"ok","total_titles":50,"titles_with_llm_count":0,"llm_title_share":0.0},{"conference":"dac","area":"da","year":2025,"status":"ok","total_titles":456,"titles_with_llm_count":38,"llm_title_share":0.08333333333333333},{"conference":"iccad","area":"da","year":2025,"status":"ok","total_titles":312,"titles_with_llm_count":31,"llm_title_share":0.09935897435897435},{"conference":"emsoft","area":"bed","year":2025,"status":"ok","total_titles":8,"titles_with_llm_count":0,"llm_title_share":0.0},{"conference":"rtas","area":"bed","year":2025,"status":"ok","total_titles":38,"titles_with_llm_count":0,"llm_title_share":0.0},{"conference":"rtss","area":"bed","year":2025,"status":"ok","total_titles":59,"titles_with_llm_count":3,"llm_title_share":0.05084745762711865},{"conference":"sc","area":"hpc","year":2025,"status":"ok","total_titles":181,"titles_with_llm_count":10,"llm_title_share":0.055248618784530384},{"conference":"hpdc","area":"hpc","year":2025,"status":"ok","total_titles":53,"titles_with_llm_count":1,"llm_title_share":0.018867924528301886},{"conference":"ics","area":"hpc","year":2025,"status":"ok","total_titles":84,"titles_with_llm_count":2,"llm_title_share":0.023809523809523808},{"conference":"mobicom","area":"mobile","year":2025,"status":"ok","total_titles":158,"titles_with_llm_count":11,"llm_title_share":0.06962025316455696},{"conference":"mobisys","area":"mobile","year":2025,"status":"ok","total_titles":113,"titles_with_llm_count":7,"llm_title_share":0.061946902654867256},{"conference":"sensys","area":"mobile","year":2025,"status":"ok","total_titles":117,"titles_with_llm_count":10,"llm_title_share":0.08547008547008547},{"conference":"imc","area":"metrics","year":2025,"status":"ok","total_titles":100,"titles_with_llm_count":3,"llm_title_share":0.03},{"conference":"sigmetrics","area":"metrics","year":2025,"status":"ok","total_titles":67,"titles_with_llm_count":0,"llm_title_share":0.0},{"conference":"osdi","area":"ops","year":2025,"status":"ok","total_titles":54,"titles_with_llm_count":3,"llm_title_share":0.05555555555555555},{"conference":"sosp","area":"ops","year":2025,"status":"ok","total_titles":67,"titles_with_llm_count":9,"llm_title_share":0.13432835820895522},{"conference":"eurosys","area":"ops","year":2025,"status":"ok","total_titles":86,"titles_with_llm_count":4,"llm_title_share":0.046511627906976744},{"conference":"fast","area":"ops","year":2025,"status":"ok","total_titles":37,"titles_with_llm_count":1,"llm_title_share":0.02702702702702703},{"conference":"usenixatc","area":"ops","year":2025,"status":"ok","total_titles":100,"titles_with_llm_count":6,"llm_title_share":0.06},{"conference":"popl","area":"plan","year":2025,"status":"ok","total_titles":79,"titles_with_llm_count":0,"llm_title_share":0.0},{"conference":"pldi","area":"plan","year":2025,"status":"ok","total_titles":89,"titles_with_llm_count":0,"llm_title_share":0.0},{"conference":"oopsla","area":"plan","year":2025,"status":"ok","total_titles":216,"titles_with_llm_count":3,"llm_title_share":0.013888888888888888},{"conference":"icfp","area":"plan","year":2025,"status":"ok","total_titles":36,"titles_with_llm_count":0,"llm_title_share":0.0},{"conference":"fse","area":"soft","year":2025,"status":"ok","total_titles":135,"titles_with_llm_count":14,"llm_title_share":0.1037037037037037},{"conference":"icse","area":"soft","year":2025,"status":"ok","total_titles":245,"titles_with_llm_count":36,"llm_title_share":0.1469387755102041},{"conference":"ase","area":"soft","year":2025,"status":"ok","total_titles":246,"titles_with_llm_count":59,"llm_title_share":0.23983739837398374},{"conference":"issta","area":"soft","year":2025,"status":"ok","total_titles":107,"titles_with_llm_count":13,"llm_title_share":0.12149532710280374},{"conference":"nsdi","area":"comm","year":2025,"status":"ok","total_titles":84,"titles_with_llm_count":2,"llm_title_share":0.023809523809523808},{"conference":"sigcomm","area":"comm","year":2025,"status":"ok","total_titles":89,"titles_with_llm_count":6,"llm_title_share":0.06741573033707865},{"conference":"siggraph","area":"graph","year":2025,"status":"ok","total_titles":175,"titles_with_llm_count":1,"llm_title_share":0.005714285714285714},{"conference":"siggraph-asia","area":"graph","year":2025,"status":"ok","total_titles":202,"titles_with_llm_count":3,"llm_title_share":0.01485148514851485},{"conference":"eurographics","area":"graph","year":2025,"status":"ok","total_titles":139,"titles_with_llm_count":1,"llm_title_share":0.007194244604316547},{"conference":"focs","area":"act","year":2025,"status":"ok","total_titles":137,"titles_with_llm_count":0,"llm_title_share":0.0},{"conference":"soda","area":"act","year":2025,"status":"ok","total_titles":193,"titles_with_llm_count":1,"llm_title_share":0.0051813471502590676},{"conference":"stoc","area":"act","year":2025,"status":"ok","total_titles":220,"titles_with_llm_count":0,"llm_title_share":0.0},{"conference":"crypto","area":"crypt","year":2025,"status":"ok","total_titles":164,"titles_with_llm_count":1,"llm_title_share":0.006097560975609756},{"conference":"eurocrypt","area":"crypt","year":2025,"status":"ok","total_titles":131,"titles_with_llm_count":0,"llm_title_share":0.0},{"conference":"cav","area":"log","year":2025,"status":"ok","total_titles":83,"titles_with_llm_count":0,"llm_title_share":0.0},{"conference":"lics","area":"log","year":2025,"status":"ok","total_titles":67,"titles_with_llm_count":0,"llm_title_share":0.0},{"conference":"ismb","area":"bio","year":2025,"status":"ok","total_titles":71,"titles_with_llm_count":0,"llm_title_share":0.0},{"conference":"recomb","area":"bio","year":2025,"status":"ok","total_titles":56,"titles_with_llm_count":0,"llm_title_share":0.0},{"conference":"ec","area":"ecom","year":2025,"status":"ok","total_titles":207,"titles_with_llm_count":1,"llm_title_share":0.004830917874396135},{"conference":"wine","area":"ecom","year":2025,"status":"ok","total_titles":17,"titles_with_llm_count":0,"llm_title_share":0.0},{"conference":"chiconf","area":"chi","year":2025,"status":"ok","total_titles":1250,"titles_with_llm_count":70,"llm_title_share":0.056},{"conference":"ubicomp","area":"chi","year":2025,"status":"ok","total_titles":242,"titles_with_llm_count":10,"llm_title_share":0.04132231404958678},{"conference":"uist","area":"chi","year":2025,"status":"ok","total_titles":211,"titles_with_llm_count":21,"llm_title_share":0.0995260663507109},{"conference":"icra","area":"robotics","year":2025,"status":"ok","total_titles":1605,"titles_with_llm_count":22,"llm_title_share":0.013707165109034268},{"conference":"iros","area":"robotics","year":2025,"status":"ok","total_titles":1986,"titles_with_llm_count":31,"llm_title_share":0.015609264853977844},{"conference":"rss","area":"robotics","year":2025,"status":"ok","total_titles":163,"titles_with_llm_count":0,"llm_title_share":0.0},{"conference":"vis","area":"visualization","year":2025,"status":"ok","total_titles":289,"titles_with_llm_count":13,"llm_title_share":0.04498269896193772},{"conference":"vr","area":"visualization","year":2025,"status":"ok","total_titles":76,"titles_with_llm_count":3,"llm_title_share":0.039473684210526314},{"conference":"sigcse","area":"csed","year":2025,"status":"ok","total_titles":498,"titles_with_llm_count":22,"llm_title_share":0.04417670682730924}]}</script>
+  <script>
+    const fallbackData = JSON.parse(document.getElementById('fallback-data').textContent);
+    const els = {
+      loadStatus: document.getElementById('load-status'),
+      lede: document.getElementById('lede'),
+      cards: document.getElementById('cards'),
+      chart: document.getElementById('chart'),
+      viewMode: document.getElementById('view-mode'),
+      sort: document.getElementById('sort'),
+      areaFilter: document.getElementById('area-filter'),
+      search: document.getElementById('search'),
+      hideEmpty: document.getElementById('hide-empty'),
+      note: document.getElementById('note'),
+    };
+
+    const fmtInt = new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 });
+    const fmtPct = new Intl.NumberFormat(undefined, { style: 'percent', maximumFractionDigits: 1 });
+
+    let dataset;
+
+    function escapeHtml(value) {
+      return String(value ?? '').replace(/[&<>"']/g, char => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[char]));
+    }
+
+    function percent(value) {
+      return Number.isFinite(value) ? fmtPct.format(value) : 'N/A';
+    }
+
+    function areaColor(area) {
+      let hash = 0;
+      for (const ch of String(area)) hash = (hash * 31 + ch.charCodeAt(0)) % 360;
+      return `hsl(${hash}, 62%, 43%)`;
+    }
+
+    function normalize(raw) {
+      const conferences = (raw.conferences ?? []).map(row => ({
+        conference: String(row.conference ?? ''),
+        area: String(row.area ?? 'unknown'),
+        status: String(row.status ?? ''),
+        total: Number(row.total_titles ?? 0),
+        count: Number(row.titles_with_llm_count ?? 0),
+        share: row.llm_title_share == null ? null : Number(row.llm_title_share),
+      }));
+
+      const summary = raw.summary ?? {
+        conference_count: conferences.length,
+        total_titles: conferences.reduce((sum, row) => sum + row.total, 0),
+        titles_with_llm_count: conferences.reduce((sum, row) => sum + row.count, 0),
+      };
+      if (summary.llm_title_share == null && summary.total_titles) {
+        summary.llm_title_share = summary.titles_with_llm_count / summary.total_titles;
+      }
+
+      return {
+        year: raw.year,
+        metric: raw.metric,
+        source_note: raw.source_note,
+        summary,
+        conferences,
+      };
+    }
+
+    async function loadData() {
+      try {
+        const response = await fetch('data.json', { cache: 'no-store' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        els.loadStatus.textContent = 'Loaded live data.json';
+        return normalize(await response.json());
+      } catch (error) {
+        els.loadStatus.textContent = 'Using embedded snapshot; serve this folder over HTTP to load data.json live.';
+        return normalize(fallbackData);
+      }
+    }
+
+    function renderSummary() {
+      const s = dataset.summary;
+      const cards = [
+        ['Conferences', fmtInt.format(s.conference_count ?? dataset.conferences.length)],
+        ['Total titles', fmtInt.format(s.total_titles ?? 0)],
+        ['Titles with “LLM”', fmtInt.format(s.titles_with_llm_count ?? 0)],
+        ['Overall share', percent(Number(s.llm_title_share))],
+      ];
+      els.cards.innerHTML = cards.map(([label, value]) => `
+        <article class="card">
+          <div class="label">${escapeHtml(label)}</div>
+          <div class="value">${escapeHtml(value)}</div>
+        </article>
+      `).join('');
+
+      els.lede.textContent = `Visualizing ${dataset.year ?? ''} papers whose titles contain “LLM” by conference: absolute count and share of all collected titles.`;
+      els.note.innerHTML = `<strong>Metric:</strong> ${escapeHtml(dataset.metric ?? 'LLM title match')}. <strong>Source note:</strong> ${escapeHtml(dataset.source_note ?? '')}`;
+    }
+
+    function populateAreaFilter() {
+      const areas = [...new Set(dataset.conferences.map(row => row.area))].sort((a, b) => a.localeCompare(b));
+      els.areaFilter.innerHTML = '<option value="all">All areas</option>' + areas
+        .map(area => `<option value="${escapeHtml(area)}">${escapeHtml(area)}</option>`)
+        .join('');
+    }
+
+    function visibleRows() {
+      const q = els.search.value.trim().toLowerCase();
+      let rows = dataset.conferences.filter(row => {
+        if (els.hideEmpty.checked && row.total === 0) return false;
+        if (els.areaFilter.value !== 'all' && row.area !== els.areaFilter.value) return false;
+        if (!q) return true;
+        return row.conference.toLowerCase().includes(q) || row.area.toLowerCase().includes(q);
+      });
+
+      if (els.viewMode.value === 'area') {
+        const grouped = new Map();
+        for (const row of rows) {
+          if (!grouped.has(row.area)) {
+            grouped.set(row.area, {
+              conference: row.area,
+              area: row.area,
+              status: 'area aggregate',
+              total: 0,
+              count: 0,
+              conferenceCount: 0,
+              conferences: [],
+            });
+          }
+          const group = grouped.get(row.area);
+          group.total += row.total;
+          group.count += row.count;
+          group.conferenceCount += 1;
+          group.conferences.push(row.conference);
+        }
+        rows = [...grouped.values()].map(group => ({
+          ...group,
+          share: group.total ? group.count / group.total : null,
+        }));
+      }
+
+      const nameValue = row => els.viewMode.value === 'area' ? row.area : row.conference;
+      const shareValue = row => Number.isFinite(row.share) ? row.share : -1;
+      rows.sort((a, b) => {
+        switch (els.sort.value) {
+          case 'count-desc':
+            return (b.count - a.count) || (shareValue(b) - shareValue(a)) || nameValue(a).localeCompare(nameValue(b));
+          case 'total-desc':
+            return (b.total - a.total) || (b.count - a.count) || nameValue(a).localeCompare(nameValue(b));
+          case 'conference-asc':
+            return nameValue(a).localeCompare(nameValue(b));
+          case 'area-asc':
+            return a.area.localeCompare(b.area) || (shareValue(b) - shareValue(a)) || (b.count - a.count);
+          case 'share-desc':
+          default:
+            return (shareValue(b) - shareValue(a)) || (b.count - a.count) || nameValue(a).localeCompare(nameValue(b));
+        }
+      });
+      return rows;
+    }
+
+    function renderChart() {
+      const rows = visibleRows();
+      const chartMaxCount = Math.max(1, ...rows.map(row => row.count));
+      const chartMaxShare = Math.max(0.01, ...rows.map(row => Number.isFinite(row.share) ? row.share : 0));
+      const countHeader = `LLM count (max ${fmtInt.format(chartMaxCount)})`;
+      const shareHeader = `LLM share (max ${percent(chartMaxShare)})`;
+
+      if (!rows.length) {
+        els.chart.innerHTML = '<div class="empty">No conferences match the current filters.</div>';
+        return;
+      }
+
+      els.chart.innerHTML = `
+        <div class="chart-header">
+          <div>Conference</div>
+          <div>${escapeHtml(countHeader)}</div>
+          <div>${escapeHtml(shareHeader)}</div>
+          <div>Total papers</div>
+        </div>
+        ${rows.map(row => {
+          const countWidth = chartMaxCount ? (row.count / chartMaxCount) * 100 : 0;
+          const shareWidth = chartMaxShare && Number.isFinite(row.share) ? (row.share / chartMaxShare) * 100 : 0;
+          const isAreaView = els.viewMode.value === 'area';
+          const rowLabel = isAreaView ? row.area : row.conference;
+          const badgeLabel = isAreaView ? `${row.conferenceCount} confs` : row.area;
+          const memberLine = isAreaView ? `\nconferences: ${row.conferences.join(', ')}` : '';
+          const tooltip = `${rowLabel} (${row.area})\n${fmtInt.format(row.count)} titles with LLM\n${percent(row.share)} of ${fmtInt.format(row.total)} titles${memberLine}\nstatus: ${row.status}`;
+          return `
+            <div class="row" title="${escapeHtml(tooltip)}">
+              <div class="conference">
+                <span class="name">${escapeHtml(rowLabel)}</span>
+                <span class="area" style="--area-color: ${areaColor(row.area)}">${escapeHtml(badgeLabel)}</span>
+              </div>
+              <div class="bar-cell count-cell" aria-label="${escapeHtml(`${rowLabel} LLM title count ${row.count}`)}">
+                <span class="bar count" style="--w:${countWidth}%; --minw:${row.count > 0 ? 3 : 0}px"></span>
+                <span class="bar-value">${fmtInt.format(row.count)}</span>
+              </div>
+              <div class="bar-cell share-cell" aria-label="${escapeHtml(`${rowLabel} LLM title share ${percent(row.share)}`)}">
+                <span class="bar share" style="--w:${shareWidth}%; --minw:${shareWidth > 0 ? 3 : 0}px"></span>
+                <span class="bar-value share-value">${percent(row.share)}</span>
+              </div>
+              <div class="total">${fmtInt.format(row.total)}</div>
+            </div>
+          `;
+        }).join('')}
+      `;
+    }
+
+    function render() {
+      renderChart();
+    }
+
+    loadData().then(data => {
+      dataset = data;
+      renderSummary();
+      populateAreaFilter();
+      render();
+
+      [els.viewMode, els.sort, els.areaFilter, els.search, els.hideEmpty].forEach(el => {
+        el.addEventListener('input', render);
+        el.addEventListener('change', render);
+      });
+    });
+  </script>
+</body>
+</html>
