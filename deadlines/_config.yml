@@ -1,0 +1,11 @@
+title: Deadlines
+description: Countdowns to top Research Venues deadlines.
+author: Doehyun Baek
+
+domain: "https://doehyunbaek.github.io/deadlines/"
+baseurl: ""
+
+github_username: doehyunbaek
+github_repo: deadlines
+
+markdown: kramdown

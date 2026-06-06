@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전문용어 쉬운</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #quiz-container {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        #submit-btn, #next-btn {
+            margin-top: 10px;
+            padding: 5px 10px;
+        }
+        #result, #score {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        #github-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #github-link a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+        }
+        #github-link a:hover {
+            color: #000;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <h1>전문용어 쉬운</h1>
+    <h4>컴퓨터공학\컴퓨터과학</h4>
+    <div id="quiz-container">
+        <p><strong>출제 분야</strong><p>
+        <div id="div-categories"></div>
+        <div id="div-desc" style="display:none;">
+            <p>다음의 쉬운 전문용어에 해당하는 영어 용어는 무엇일까요?<p>
+            <p style="margin-bottom:30px;">(띄어쓰기, 하이픈 등은 채점 시 고려되지 않습니다.)</p>
+        </div>
+        <p><strong id="korean-term"></strong></p>
+        <input type="text" id="user-answer" placeholder="답을 입력하세요" disabled>
+        <button id="submit-btn" style="display:none;">제출</button>
+        <button id="next-btn">시작</button>
+        <p id="result"></p>
+        <p id="score">점수: 0 / 0</p>
+        <p id="p-count" style="display:none;"></p>
+        <div id="div-fin" style="display:none;">
+            <p>이런! 쉬운 전문용어가 모두 다 소진되었네요~</p>
+            <p>더 많은 쉬운 전문용어를 <a href="https://easyword.kr/" target="_blank">easyword.kr</a>에 제안해 주세요!</p>
+        </div>
+
+        <div id="github-link">
+            <a href="https://github.com/doehyunbaek/wordeasy" target="_blank">
+                <i class="fab fa-github"></i> GitHub
+            </a>
+        </div>
+    </div>
+
+    <script>
+        let jargons = [];
+        let categories = [];
+        let selected = [];
+        let currentJargon;
+        let usedIndices = new Set();
+        let score = 0;
+        let totalQuestions = 0;
+        let count = 0;
+
+        const koreanTermElement = document.getElementById('korean-term');
+        const userAnswerInput = document.getElementById('user-answer');
+        const submitBtn = document.getElementById('submit-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const resultElement = document.getElementById('result');
+        const scoreElement = document.getElementById('score');
+        const descDiv = document.getElementById('div-desc');
+        const finDiv = document.getElementById('div-fin');
+        const countP = document.getElementById('p-count');
+
+        userAnswerInput.value = '';
+        userAnswerInput.disabled = true;
+
+        fetch('jargons.json')
+            .then(response => response.json())
+            .then(data => {
+                jargons = data;
+                const c = jargons.flatMap(d => d.jargon_categories.map(c => c.category.acronym));
+                categories = [...new Set(c)];
+                categories.sort();
+                const d = document.getElementById("div-categories");
+                d.innerHTML = categories.map(
+                  c => {
+                    const ch = c === "PL" ? " checked" : "";
+                    return `<label>${c}<input type="checkbox" name="${c}" value="${c}" ${ch}></label>`;
+                  }
+                ).join(' ');
+            })
+            .catch(error => console.error('데이터 로드 오류:', error));
+
+        function getRandomJargon() {
+            if (usedIndices.size === jargons.length) {
+                return;
+            }
+            
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * jargons.length);
+            } while (usedIndices.has(randomIndex));
+            
+            usedIndices.add(randomIndex);
+
+            return jargons[randomIndex];
+        }
+
+        function loadQuestion() {
+            const checked = document.querySelectorAll('#div-categories input[type="checkbox"]');
+            const values = Array.from(checked).flatMap(
+              cb => cb.checked ? [cb.value] : []
+            );
+            jargons = jargons.filter(
+              j => j.jargon_categories.some(c => values.includes(c.category.acronym))
+            );
+
+            if (jargons.length === 0) return;
+
+            const checkboxes = document.querySelectorAll('#div-categories input[type="checkbox"]');
+            checkboxes.forEach(checkbox => { checkbox.disabled = true; });
+
+            currentJargon = getRandomJargon();
+
+            if (currentJargon === undefined) {
+              userAnswerInput.disabled = true;
+              submitBtn.style.display = 'none';
+              descDiv.style.display = 'none';
+              nextBtn.style.display = 'none';
+              koreanTermElement.style.display = 'none';
+              userAnswerInput.style.display = 'none';
+              resultElement.style.display = 'none';
+              finDiv.style.display = 'block';
+              return;
+            }
+
+            koreanTermElement.textContent = currentJargon.translations[0].name;
+            userAnswerInput.value = '';
+            userAnswerInput.disabled = false;
+            resultElement.textContent = '';
+            submitBtn.style.display = 'inline-block';
+            descDiv.style.display = 'block';
+            nextBtn.innerText = '다음';
+            nextBtn.style.display = 'none';
+            userAnswerInput.focus();
+        }
+
+        function editDistance(str1, str2) {
+            const m = str1.length;
+            const n = str2.length;
+            const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+            for (let i = 0; i <= m; i++) {
+                dp[i][0] = i;
+            }
+            for (let j = 0; j <= n; j++) {
+                dp[0][j] = j;
+            }
+            for (let i = 1; i <= m; i++) {
+                for (let j = 1; j <= n; j++) {
+                    if (str1[i - 1] === str2[j - 1]) {
+                        dp[i][j] = dp[i - 1][j - 1];
+                    } else {
+                        dp[i][j] = 1 + Math.min(
+                            dp[i - 1][j],
+                            dp[i][j - 1],
+                            dp[i - 1][j - 1]
+                        );
+                    }
+                }
+            }
+            return dp[m][n];
+        }
+
+        function checkAnswer() {
+            const userAnswer = userAnswerInput.value.trim().toLowerCase().replace(/[^a-zA-Z]/g, '');
+            const correctAnswer = currentJargon.name.toLowerCase().replace(/[^a-zA-Z]/g, '');
+            if (userAnswer.length === 0) return;
+
+            totalQuestions++;
+            if (editDistance(userAnswer, correctAnswer) <= Math.max(1, correctAnswer.length / 10)) {
+                resultElement.textContent = '정답입니다!';
+                resultElement.style.color = 'green';
+                score++;
+                if (count < 0) count = 0;
+                count++;
+            } else {
+                resultElement.textContent = `틀렸습니다. 정답은 "${currentJargon.name}"입니다.`;
+                resultElement.style.color = 'red';
+                if (count > 0) count = 0;
+                count--;
+            }
+
+            if (count >= 5) {
+                countP.style.display = 'block';
+                countP.innerText = `대단해요! ${count}번 연속 정답이에요!`;
+            } else if (count <= -5) {
+                countP.style.display = 'block';
+                countP.innerText = `이를 어쩌나... ${-count}번 연속 틀렸어요.`;
+            } else {
+                countP.style.display = 'none';
+            }
+
+            updateScore();
+            submitBtn.style.display = 'none';
+            nextBtn.style.display = 'inline-block';
+            userAnswerInput.disabled = true;
+            nextBtn.focus();
+        }
+
+        function updateScore() {
+            scoreElement.textContent = `점수: ${score} / ${totalQuestions}`;
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                if (submitBtn.style.display !== 'none') {
+                    checkAnswer();
+                }
+            }
+        }
+
+        submitBtn.addEventListener('click', checkAnswer);
+        nextBtn.addEventListener('click', loadQuestion);
+        userAnswerInput.addEventListener('keypress', handleKeyPress);
+        document.addEventListener('keypress', handleKeyPress);
+    </script>
+</body>
+</html>
