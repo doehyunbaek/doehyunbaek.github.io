@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>anommit — anonymous GitHub commits</title>
+    <meta
+      name="description"
+      content="Render a GitHub commit page in your browser while anonymizing commit authors."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="anommit home">
+        <span class="brand-mark" aria-hidden="true">◌</span>
+        <span>anommit</span>
+      </a>
+      <form class="lookup" id="lookup-form">
+        <label class="sr-only" for="commit-url">GitHub commit URL</label>
+        <input
+          id="commit-url"
+          name="commit-url"
+          type="url"
+          inputmode="url"
+          autocomplete="off"
+          placeholder="https://github.com/owner/repo/commit/sha"
+          required
+        />
+        <button type="submit">Render</button>
+      </form>
+    </header>
+
+    <main class="page">
+      <section id="app" class="app" aria-live="polite"></section>
+    </main>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
