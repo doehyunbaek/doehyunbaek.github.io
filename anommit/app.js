@@ -5,6 +5,7 @@ const input = document.querySelector("#commit-url");
 const GITHUB_HEADERS = Object.freeze({
   Accept: "application/vnd.github+json",
 });
+const TAG_CONTAINMENT_CHECK_LIMIT = 1;
 
 let activeRequest = 0;
 
@@ -127,14 +128,15 @@ async function renderCommitUrl(targetUrl) {
     const commit = await fetchCommit(target);
     if (requestId !== activeRequest) return;
 
-    const refInfo = await fetchRefInfo(target, commit.sha || target.sha).catch(() => ({
-      branches: [],
-      tags: [],
-    }));
-    if (requestId !== activeRequest) return;
-
     const aliases = createAliasBook(commit);
-    renderCommit(target, commit, aliases, refInfo);
+    renderCommit(target, commit, aliases, { loading: true });
+
+    fetchRefInfo(target, commit.sha || target.sha)
+      .catch(() => ({ branches: [], tags: [] }))
+      .then((refInfo) => {
+        if (requestId !== activeRequest) return;
+        updateRefsFact(refInfo);
+      });
   } catch (error) {
     if (requestId !== activeRequest) return;
     renderError("Could not load this commit.", error.message);
@@ -196,26 +198,29 @@ async function fetchCommit({ owner, repo, sha }) {
 }
 
 async function fetchRefInfo(target, commitSha) {
-  const [repoInfo, headBranches] = await Promise.all([
-    fetchGitHubJson(repoApiUrl(target, "")),
-    fetchGitHubJson(repoApiUrl(target, `/commits/${encodeURIComponent(commitSha)}/branches-where-head`)).catch(
-      () => [],
-    ),
+  const repoInfoPromise = fetchGitHubJson(repoApiUrl(target, "")).catch(() => null);
+  const headBranchesPromise = fetchGitHubJson(
+    repoApiUrl(target, `/commits/${encodeURIComponent(commitSha)}/branches-where-head`),
+  ).catch(() => []);
+  const tagsPromise = containingTags(target, commitSha);
+
+  const repoInfo = await repoInfoPromise;
+  const defaultBranchPromise = repoInfo?.default_branch
+    ? refContainsCommit(target, commitSha, `refs/heads/${repoInfo.default_branch}`)
+    : Promise.resolve(false);
+
+  const [headBranches, defaultBranchContainsCommit, tags] = await Promise.all([
+    headBranchesPromise,
+    defaultBranchPromise,
+    tagsPromise,
   ]);
 
   const branches = new Set();
   for (const branch of Array.isArray(headBranches) ? headBranches : []) {
     if (branch?.name) branches.add(branch.name);
   }
+  if (defaultBranchContainsCommit && repoInfo?.default_branch) branches.add(repoInfo.default_branch);
 
-  if (repoInfo?.default_branch) {
-    const defaultRef = `refs/heads/${repoInfo.default_branch}`;
-    if (await refContainsCommit(target, commitSha, defaultRef)) {
-      branches.add(repoInfo.default_branch);
-    }
-  }
-
-  const tags = await containingTags(target, commitSha);
   return {
     branches: [...branches],
     tags,
@@ -224,21 +229,18 @@ async function fetchRefInfo(target, commitSha) {
 
 async function containingTags(target, commitSha) {
   const tagsUrl = new URL(repoApiUrl(target, "/tags"));
-  tagsUrl.searchParams.set("per_page", "30");
+  tagsUrl.searchParams.set("per_page", String(TAG_CONTAINMENT_CHECK_LIMIT));
   const tags = await fetchGitHubJson(tagsUrl.href).catch(() => []);
-  const matches = [];
+  const candidates = (Array.isArray(tags) ? tags : []).filter((tag) => tag?.name);
 
-  for (const tag of Array.isArray(tags) ? tags.slice(0, 12) : []) {
-    if (!tag?.name) continue;
-    if (tag.commit?.sha?.toLowerCase() === commitSha.toLowerCase()) {
-      matches.push(tag.name);
-    } else if (await refContainsCommit(target, commitSha, `refs/tags/${tag.name}`)) {
-      matches.push(tag.name);
-    }
-    if (matches.length >= 2) break;
-  }
+  const checks = await Promise.all(
+    candidates.map(async (tag) => {
+      if (tag.commit?.sha?.toLowerCase() === commitSha.toLowerCase()) return tag.name;
+      return (await refContainsCommit(target, commitSha, `refs/tags/${tag.name}`)) ? tag.name : "";
+    }),
+  );
 
-  return matches;
+  return checks.filter(Boolean).slice(0, 2);
 }
 
 async function refContainsCommit(target, commitSha, refName) {
@@ -670,15 +672,24 @@ function renderVerification(verification = {}) {
 }
 
 function renderRefsFact(refInfo = { branches: [], tags: [] }) {
+  if (refInfo.loading) {
+    return `
+      <div id="refs-fact">
+        <dt>Refs</dt>
+        <dd class="ref-list muted">loading…</dd>
+      </div>
+    `;
+  }
+
   const refs = [
     ...(refInfo.branches || []).map((name) => ({ kind: "branch", name })),
     ...(refInfo.tags || []).map((name) => ({ kind: "tag", name })),
   ];
 
-  if (!refs.length) return "";
+  if (!refs.length) return `<div id="refs-fact" hidden></div>`;
 
   return `
-    <div>
+    <div id="refs-fact">
       <dt>Refs</dt>
       <dd class="ref-list">
         ${refs
@@ -692,6 +703,12 @@ function renderRefsFact(refInfo = { branches: [], tags: [] }) {
       </dd>
     </div>
   `;
+}
+
+function updateRefsFact(refInfo) {
+  const target = document.querySelector("#refs-fact");
+  if (!target) return;
+  target.outerHTML = renderRefsFact(refInfo);
 }
 
 function renderFile(file, aliases) {
