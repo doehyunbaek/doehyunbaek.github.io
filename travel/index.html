@@ -1,298 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<title>My Travel Map</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Travel Map</title>
+  <style>
+    html, body, #map {
+      height: 100%;
+      margin: 0;
+    }
 
-<!-- Leaflet CSS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    .legend {
+      margin: 10px;
+      padding: 8px 10px;
+      border-radius: 3px;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+      font: 14px/18px Arial, sans-serif;
+    }
 
-<style>
-  html,body,#map {height:100%;margin:0;}
-  .legend{
-    background:#fff;
-    padding:6px 8px;
-    border-radius:4px;
-    font:14px/18px sans-serif;
-    box-shadow:0 0 4px rgba(0,0,0,.15);
-  }
-  .leaflet-tile {
-    image-rendering: pixelated;
-  }
-
-  #map {
-    background-color: #ccc; /* optional for visual continuity */
-  }
-</style>
+    .legend-swatch {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-right: 5px;
+      vertical-align: -1px;
+      background: #e44;
+    }
+  </style>
 </head>
 <body>
-<div id="map"></div>
+  <div id="map"></div>
 
-<!-- Leaflet (U-MD build: exposes the global “L”) -->
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const visited = [
+      // "Afghanistan",
+      // "Albania",
+      // "Algeria",
+      // "Angola",
+      // "Antarctica",
+      // "Argentina",
+      // "Armenia",
+      // "Australia",
+      "Austria",
+      // "Azerbaijan",
+      // "Bahamas",
+      // "Bangladesh",
+      // "Belarus",
+      "Belgium",
+      // "Belize",
+      // "Benin",
+      // "Bhutan",
+      // "Bolivia",
+      // "Bosnia and Herz.",
+      // "Botswana",
+      // "Brazil",
+      // "Brunei",
+      // "Bulgaria",
+      // "Burkina Faso",
+      // "Burundi",
+      // "Cambodia",
+      // "Cameroon",
+      "Canada",
+      // "Central African Rep.",
+      // "Chad",
+      // "Chile",
+      "China",
+      // "Colombia",
+      // "Congo",
+      // "Costa Rica",
+      // "Côte d'Ivoire",
+      // "Croatia",
+      // "Cuba",
+      // "Cyprus",
+      // "Czechia",
+      // "Dem. Rep. Congo",
+      "Denmark",
+      // "Djibouti",
+      // "Dominican Rep.",
+      // "Ecuador",
+      // "Egypt",
+      // "El Salvador",
+      // "Eq. Guinea",
+      // "Eritrea",
+      // "Estonia",
+      // "eSwatini",
+      // "Ethiopia",
+      // "Falkland Is.",
+      // "Fiji",
+      // "Finland",
+      // "Fr. S. Antarctic Lands",
+      "France",
+      // "Gabon",
+      // "Gambia",
+      // "Georgia",
+      "Germany",
+      // "Ghana",
+      // "Greece",
+      // "Greenland",
+      // "Guatemala",
+      // "Guinea-Bissau",
+      // "Guinea",
+      // "Guyana",
+      // "Haiti",
+      // "Honduras",
+      // "Hungary",
+      // "Iceland",
+      // "India",
+      "Indonesia",
+      // "Iran",
+      // "Iraq",
+      "Ireland",
+      // "Israel",
+      "Italy",
+      // "Jamaica",
+      "Japan",
+      // "Jordan",
+      // "Kazakhstan",
+      // "Kenya",
+      // "Kosovo",
+      // "Kuwait",
+      // "Kyrgyzstan",
+      // "Laos",
+      // "Latvia",
+      // "Lebanon",
+      // "Lesotho",
+      // "Liberia",
+      // "Libya",
+      // "Lithuania",
+      "Liechtenstein",
+      "Luxembourg",
+      // "Macedonia",
+      // "Madagascar",
+      // "Malawi",
+      // "Malaysia",
+      // "Mali",
+      // "Mauritania",
+      // "Mexico",
+      "Monaco",
+      // "Moldova",
+      // "Mongolia",
+      // "Montenegro",
+      // "Morocco",
+      // "Mozambique",
+      // "Myanmar",
+      // "N. Cyprus",
+      // "Namibia",
+      // "Nepal",
+      "Netherlands",
+      // "New Caledonia",
+      // "New Zealand",
+      // "Nicaragua",
+      // "Niger",
+      // "Nigeria",
+      // "North Korea",
+      "Norway",
+      // "Oman",
+      // "Pakistan",
+      // "Palestine",
+      // "Panama",
+      // "Papua New Guinea",
+      // "Paraguay",
+      // "Peru",
+      // "Philippines",
+      // "Poland",
+      "Portugal",
+      // "Puerto Rico",
+      // "Qatar",
+      // "Romania",
+      // "Russia",
+      // "Rwanda",
+      // "S. Sudan",
+      // "Saudi Arabia",
+      // "Senegal",
+      // "Serbia",
+      // "Sierra Leone",
+      // "Slovakia",
+      // "Slovenia",
+      // "Solomon Is.",
+      // "Somalia",
+      // "Somaliland",
+      // "South Africa",
+      "South Korea",
+      "Spain",
+      // "Sri Lanka",
+      // "Sudan",
+      // "Suriname",
+      "Sweden",
+      "Switzerland",
+      // "Syria",
+      "Taiwan",
+      // "Tajikistan",
+      // "Tanzania",
+      "Thailand",
+      // "Timor-Leste",
+      // "Togo",
+      // "Trinidad and Tobago",
+      // "Tunisia",
+      // "Turkey",
+      // "Turkmenistan",
+      // "Uganda",
+      // "Ukraine",
+      // "United Arab Emirates",
+      "United Kingdom",
+      "United States of America",
+      // "Uruguay",
+      // "Uzbekistan",
+      // "Vanuatu",
+      // "Venezuela",
+      // "Vietnam",
+      // "W. Sahara",
+      // "Yemen",
+      // "Zambia",
+      // "Zimbabwe",
+    ].map(name => name.toLowerCase());
 
-<!-- One ES-module block with everything else -->
-<script type="module">
-/* ─── 1.  EDIT THIS LIST ──────────────────────────────────────────────
-   Use the country names as they appear in Natural-Earth / world-atlas
-   (case-insensitive). Examples below:                                  */
-const visited = [
-  // "Afghanistan",
-  // "Albania",
-  // "Algeria",
-  // "Angola",
-  // "Antarctica",
-  // "Argentina",
-  // "Armenia",
-  // "Australia",
-  "Austria",
-  // "Azerbaijan",
-  // "Bahamas",
-  // "Bangladesh",
-  // "Belarus",
-  "Belgium",
-  // "Belize",
-  // "Benin",
-  // "Bhutan",
-  // "Bolivia",
-  // "Bosnia and Herz.",
-  // "Botswana",
-  // "Brazil",
-  // "Brunei",
-  // "Bulgaria",
-  // "Burkina Faso",
-  // "Burundi",
-  // "Cambodia",
-  // "Cameroon",
-  "Canada",
-  // "Central African Rep.",
-  // "Chad",
-  // "Chile",
-  "China",
-  // "Colombia",
-  // "Congo",
-  // "Costa Rica",
-  // "Côte d'Ivoire",
-  // "Croatia",
-  // "Cuba",
-  // "Cyprus",
-  // "Czechia",
-  // "Dem. Rep. Congo",
-  "Denmark",
-  // "Djibouti",
-  // "Dominican Rep.",
-  // "Ecuador",
-  // "Egypt",
-  // "El Salvador",
-  // "Eq. Guinea",
-  // "Eritrea",
-  // "Estonia",
-  // "eSwatini",
-  // "Ethiopia",
-  // "Falkland Is.",
-  // "Fiji",
-  // "Finland",
-  // "Fr. S. Antarctic Lands",
-  "France",
-  // "Gabon",
-  // "Gambia",
-  // "Georgia",
-  "Germany",
-  // "Ghana",
-  // "Greece",
-  // "Greenland",
-  // "Guatemala",
-  // "Guinea-Bissau",
-  // "Guinea",
-  // "Guyana",
-  // "Haiti",
-  // "Honduras",
-  // "Hungary",
-  // "Iceland",
-  // "India",
-  "Indonesia",
-  // "Iran",
-  // "Iraq",
-  "Ireland",
-  // "Israel",
-  "Italy",
-  // "Jamaica",
-  "Japan",
-  // "Jordan",
-  // "Kazakhstan",
-  // "Kenya",
-  // "Kosovo",
-  // "Kuwait",
-  // "Kyrgyzstan",
-  // "Laos",
-  // "Latvia",
-  // "Lebanon",
-  // "Lesotho",
-  // "Liberia",
-  // "Libya",
-  // "Lithuania",
-  "Liechtenstein",
-  "Luxembourg",
-  // "Macedonia",
-  // "Madagascar",
-  // "Malawi",
-  // "Malaysia",
-  // "Mali",
-  // "Mauritania",
-  // "Mexico",
-  "Monaco",
-  // "Moldova",
-  // "Mongolia",
-  // "Montenegro",
-  // "Morocco",
-  // "Mozambique",
-  // "Myanmar",
-  // "N. Cyprus",
-  // "Namibia",
-  // "Nepal",
-   "Netherlands",
-  // "New Caledonia",
-  // "New Zealand",
-  // "Nicaragua",
-  // "Niger",
-  // "Nigeria",
-  // "North Korea",
-  "Norway",
-  // "Oman",
-  // "Pakistan",
-  // "Palestine",
-  // "Panama",
-  // "Papua New Guinea",
-  // "Paraguay",
-  // "Peru",
-  // "Philippines",
-  // "Poland",
-  "Portugal",
-  // "Puerto Rico",
-  // "Qatar",
-  // "Romania",
-  // "Russia",
-  // "Rwanda",
-  // "S. Sudan",
-  // "Saudi Arabia",
-  // "Senegal",
-  // "Serbia",
-  // "Sierra Leone",
-  // "Slovakia",
-  // "Slovenia",
-  // "Solomon Is.",
-  // "Somalia",
-  // "Somaliland",
-  // "South Africa",
-  "South Korea",
-  "Spain",
-  // "Sri Lanka",
-  // "Sudan",
-  // "Suriname",
-  "Sweden",
-  "Switzerland",
-  // "Syria",
-  "Taiwan",
-  // "Tajikistan",
-  // "Tanzania",
-  "Thailand",
-  // "Timor-Leste",
-  // "Togo",
-  // "Trinidad and Tobago",
-  // "Tunisia",
-  // "Turkey",
-  // "Turkmenistan",
-  // "Uganda",
-  // "Ukraine",
-  // "United Arab Emirates",
-  "United Kingdom",
-  "United States of America",
-  // "Uruguay",
-  // "Uzbekistan",
-  // "Vanuatu",
-  // "Venezuela",
-  // "Vietnam",
-  // "W. Sahara",
-  // "Yemen",
-  // "Zambia",
-  // "Zimbabwe",
-].map(name => name.toLowerCase());     // normalise for easy matching
-/* ──────────────────────────────────────────────────────────────────── */
+    function initMap() {
+      const map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 20, lng: 0 },
+        zoom: 2,
+        mapTypeId: "roadmap"
+      });
 
-/* 2.  Minimal Leaflet set-up */
-const map = L.map('map').setView([20,0], 2);
+      map.data.loadGeoJson("countries.geojson");
 
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution: "© OpenStreetMap contributors",
-  detectRetina: true,
-  noWrap: true,  // prevent horizontal repetition
-  continuousWorld: false,  // deprecated, replaced by noWrap
-  tileSize: 256,
-  edgeBufferTiles: 2  // optional: buffers to avoid flickering or seams
-}).addTo(map);
+      map.data.setStyle(feature => {
+        const name = (feature.getProperty("name") || "").toLowerCase();
+        const chosen = visited.includes(name);
 
-/* 3.  Fetch world-atlas TopoJSON and convert to GeoJSON */
-import { feature } from "https://unpkg.com/topojson-client@3?module";
+        return {
+          clickable: chosen,
+          fillColor: chosen ? "#e44" : "#ccc",
+          fillOpacity: chosen ? 0.75 : 0.05,
+          strokeColor: "#222",
+          strokeOpacity: 1,
+          strokeWeight: 0.7
+        };
+      });
 
-/* 3. Fetch world GeoJSON */
-// Using the new URL you provided (which is GeoJSON, not TopoJSON)
-const geoUrl = "https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson";
+      const infoWindow = new google.maps.InfoWindow();
+      map.data.addListener("click", event => {
+        const name = event.feature.getProperty("name");
+        if (!name || !visited.includes(name.toLowerCase())) return;
 
-const geo = await fetch(geoUrl).then(r => r.json());
+        infoWindow.setContent(`<strong>${name}</strong>`);
+        infoWindow.setPosition(event.latLng);
+        infoWindow.open({ map });
+      });
 
-// Note: You can now remove the import { feature } from "topojson-client" line entirely.
-
-/* 4. Filter and Render */
-const filteredGeo = {
-  type: "FeatureCollection",
-  features: geo.features.filter(f => {
-    // Note: Some GeoJSONs use f.properties.ADMIN or f.properties.name
-    const name = (f.properties.name || f.properties.ADMIN)?.toLowerCase();
-    if (!name) return false;
-    return true;
-  })
-};
-
-L.geoJSON(filteredGeo, {
-  // CRITICAL: This fixes the horizontal black lines (Antimeridian issue)
-  coordsToLatLng: function(coords) {
-    let lng = coords[0];
-    let lat = coords[1];
-    return L.latLng(lat, lng); 
-  },
-  style: f => {
-    const name = (f.properties.name || f.properties.ADMIN).toLowerCase();
-    const chosen = visited.includes(name);
-    return {
-      color: "#222",
-      weight: 0.7,
-      fillOpacity: chosen ? 0.75 : 0.05,
-      fillColor: chosen ? "#e44" : "#ccc"
-    };
-  },
-  onEachFeature: (f, layer) => {
-    const name = f.properties.name || f.properties.ADMIN;
-    if (visited.includes(name.toLowerCase())) {
-      layer.bindPopup(`<strong>${name}</strong>`);
+      const legend = document.createElement("div");
+      legend.className = "legend";
+      legend.innerHTML = '<span class="legend-swatch"></span> Visited';
+      map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
     }
-  }
-}).addTo(map);
 
+    async function loadGoogleMaps() {
+      let region = "US";
 
-/* 5. Add Legend */
-const LegendControl = L.Control.extend({
-  options: {
-    position: "bottomleft"
-  },
-  onAdd: function() {
-    const d = L.DomUtil.create("div", "legend");
-    d.innerHTML = `<span style="background:#e44;display:inline-block;width:12px;height:12px"></span> Visited`;
-    return d;
-  }
-});
+      try {
+        const response = await fetch("https://ipapi.co/json/");
+        if (response.ok) {
+          const data = await response.json();
+          if (data.country_code) region = data.country_code;
+        }
+      } catch (error) {
+        console.warn("IP lookup failed; using the default map region.", error);
+      }
 
-// Create and add the instance
-new LegendControl().addTo(map);
-</script>
+      const script = document.createElement("script");
+      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDyqMZHQwTEaHclC9ZndrWmUI2k5y_baFs&region=${encodeURIComponent(region)}&callback=initMap`;
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+    }
+
+    loadGoogleMaps();
+  </script>
 </body>
 </html>
