@@ -268,6 +268,8 @@
       }
 
       const script = document.createElement("script");
+      // Browser-side Maps keys are public by design. Use your own key and restrict it
+      // to https://doehyunbaek.github.io/* and the Google Maps JavaScript API.
       script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDyqMZHQwTEaHclC9ZndrWmUI2k5y_baFs&region=${encodeURIComponent(region)}&callback=initMap`;
       script.async = true;
       script.defer = true;
