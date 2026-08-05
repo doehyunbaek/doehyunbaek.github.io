@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Claude Monet Paintings Map</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      display: flex;
+      overflow: hidden;
+      color: #202124;
+      font-family: Arial, sans-serif;
+    }
+
+    #map {
+      flex: 1;
+      min-width: 0;
+      height: 100%;
+    }
+
+    #paintings-panel {
+      width: clamp(320px, 30vw, 430px);
+      min-width: 0;
+      height: 100%;
+      flex: none;
+      overflow: hidden;
+      background: #fff;
+      border-left: 1px solid #dadce0;
+      box-shadow: -2px 0 8px rgba(0, 0, 0, 0.12);
+      z-index: 2;
+    }
+
+    .panel-content {
+      box-sizing: border-box;
+      height: 100%;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .panel-info {
+      margin-bottom: 18px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .panel-info h1 {
+      margin: 0 0 5px;
+      font: 600 23px/29px Georgia, serif;
+    }
+
+    .panel-info p {
+      margin: 0;
+      color: #5f6368;
+      font-size: 12px;
+      line-height: 17px;
+    }
+
+    .panel-info a, .painting a {
+      color: #1967d2;
+    }
+
+    .aggregation-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      font-size: 12px;
+    }
+
+    .aggregation-control select {
+      flex: 1;
+      padding: 6px 8px;
+      background: #fff;
+      border: 1px solid #dadce0;
+      border-radius: 4px;
+      color: #202124;
+    }
+
+    .location-button {
+      margin: 10px;
+      padding: 9px 12px;
+      color: #202124;
+      background: #fff;
+      border: 0;
+      border-radius: 3px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      font: 13px Arial, sans-serif;
+    }
+
+    .location-button:hover {
+      background: #f8f9fa;
+    }
+
+    .panel-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .panel-heading h2 {
+      margin: 0 0 4px;
+      font: 600 21px/27px Georgia, serif;
+    }
+
+    .panel-heading p {
+      margin: 0;
+      color: #5f6368;
+      font-size: 12px;
+      line-height: 17px;
+    }
+
+    .show-all {
+      flex: none;
+      padding: 6px 9px;
+      color: #1967d2;
+      background: #fff;
+      border: 1px solid #dadce0;
+      border-radius: 4px;
+      cursor: pointer;
+      font: 12px Arial, sans-serif;
+    }
+
+    .show-all:hover {
+      background: #f8f9fa;
+    }
+
+    .paintings {
+      padding-right: 5px;
+    }
+
+    .museum-group {
+      margin-top: 22px;
+    }
+
+    .museum-group:first-child {
+      margin-top: 0;
+    }
+
+    .museum-group summary {
+      padding: 8px 4px 8px 0;
+      border-bottom: 2px solid #202124;
+      cursor: pointer;
+      font: 600 16px/21px Georgia, serif;
+    }
+
+    .museum-group summary::marker {
+      color: #5f6368;
+    }
+
+    .museum-count {
+      float: right;
+      margin-left: 10px;
+      color: #5f6368;
+      font: 12px/21px Arial, sans-serif;
+    }
+
+    .painting {
+      display: grid;
+      grid-template-columns: 74px 1fr;
+      gap: 10px;
+      min-height: 60px;
+      padding: 9px 0;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .painting:first-child {
+      border-top: 0;
+    }
+
+    .painting img {
+      width: 74px;
+      height: 58px;
+      border-radius: 2px;
+      background: #eee;
+      object-fit: cover;
+    }
+
+    .painting-no-image {
+      width: 74px;
+      height: 58px;
+      border-radius: 2px;
+      background: #eee;
+    }
+
+    .painting h3 {
+      margin: 0 0 4px;
+      font: 600 14px/18px Georgia, serif;
+    }
+
+    .painting p {
+      margin: 0;
+      color: #5f6368;
+      font-size: 11px;
+      line-height: 15px;
+    }
+
+    @media (max-width: 700px) {
+      body {
+        display: block;
+      }
+
+      #map {
+        height: 55%;
+      }
+
+      #paintings-panel {
+        width: 100%;
+        height: 45%;
+        border-top: 1px solid #dadce0;
+        border-left: 0;
+        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.12);
+      }
+
+      .panel-content {
+        padding: 14px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <aside id="paintings-panel" aria-live="polite">
+    <div class="panel-content">
+      <header class="panel-info">
+        <h1>Claude Monet paintings</h1>
+        <p id="status">Loading collection locations…</p>
+        <label class="aggregation-control">
+          Group by
+          <select id="aggregation">
+            <option value="museum">Museum</option>
+            <option value="city">City</option>
+            <option value="country">Country</option>
+          </select>
+        </label>
+      </header>
+      <div id="panel-results"></div>
+    </div>
+  </aside>
+
+  <script>
+    let map;
+    let panel;
+    let allLocations = [];
+    let userLocationMarker;
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 35, lng: 0 },
+        zoom: 2,
+        mapTypeId: "roadmap"
+      });
+      panel = document.getElementById("panel-results");
+      document.getElementById("aggregation").addEventListener("change", () => {
+        if (allLocations.length) displayAllPaintings(allLocations);
+      });
+      addLocationControl();
+      loadPaintings(document.getElementById("status"));
+    }
+
+    function addLocationControl() {
+      const button = document.createElement("button");
+      button.className = "location-button";
+      button.type = "button";
+      button.textContent = "Use my location";
+
+      if (!navigator.geolocation) {
+        button.disabled = true;
+        button.textContent = "Location unavailable";
+      } else {
+        button.addEventListener("click", () => {
+          button.disabled = true;
+          button.textContent = "Finding location…";
+          navigator.geolocation.getCurrentPosition(position => {
+            const location = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            if (userLocationMarker) userLocationMarker.setMap(null);
+            userLocationMarker = new google.maps.Marker({
+              map,
+              position: location,
+              title: "Your location",
+              icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                fillColor: "#1a73e8",
+                fillOpacity: 1,
+                strokeColor: "#fff",
+                strokeWeight: 2,
+                scale: 8
+              }
+            });
+            map.setCenter(location);
+            map.setZoom(8);
+            button.disabled = false;
+            button.textContent = "Your location";
+          }, error => {
+            console.warn("Could not get location", error);
+            button.disabled = false;
+            button.textContent = "Try my location again";
+          }, {
+            enableHighAccuracy: false,
+            timeout: 10000,
+            maximumAge: 300000
+          });
+        });
+      }
+
+      map.controls[google.maps.ControlPosition.TOP_RIGHT].push(button);
+    }
+
+    async function loadPaintings(status) {
+      try {
+        const response = await fetch("paintings.json");
+        if (!response.ok) throw new Error(`Painting data returned ${response.status}`);
+        const data = await response.json();
+        const rows = data.records;
+        const locations = groupByLocation(rows);
+        allLocations = locations;
+        addMarkers(locations);
+        displayAllPaintings(locations);
+
+        const paintingCount = new Set(rows.map(row => row.painting)).size;
+        status.innerHTML = `${paintingCount.toLocaleString()} paintings at ` +
+          `${locations.length.toLocaleString()} collection locations. ` +
+          `<a href="${data.sourceUrl}" target="_blank" rel="noopener">Data: ${data.source}</a>`;
+      } catch (error) {
+        console.error(error);
+        status.textContent = "Could not load the painting data. Please reload to try again.";
+      }
+    }
+
+    function groupByLocation(rows) {
+      const locations = new Map();
+      const seen = new Set();
+
+      for (const row of rows) {
+        const coordinates = parsePoint(row.coord);
+        if (!coordinates) continue;
+
+        const paintingId = row.painting;
+        const collectionId = row.collection;
+        const duplicateKey = `${paintingId}|${collectionId}|${coordinates.lat}|${coordinates.lng}`;
+        if (seen.has(duplicateKey)) continue;
+        seen.add(duplicateKey);
+
+        const locationKey = `${coordinates.lat.toFixed(5)},${coordinates.lng.toFixed(5)}`;
+        if (!locations.has(locationKey)) {
+          locations.set(locationKey, {
+            position: coordinates,
+            collections: new Set(),
+            paintings: []
+          });
+        }
+
+        const location = locations.get(locationKey);
+        location.collections.add(row.collectionName);
+        location.paintings.push({
+          title: row.title,
+          url: paintingId,
+          image: row.image,
+          collection: row.collectionName,
+          collectionId,
+          city: row.city,
+          countryCode: row.countryCode
+        });
+      }
+
+      return [...locations.values()].sort((a, b) => b.paintings.length - a.paintings.length);
+    }
+
+    function parsePoint(value) {
+      const match = /^Point\((-?[\d.]+) (-?[\d.]+)\)$/.exec(value);
+      return match ? { lng: Number(match[1]), lat: Number(match[2]) } : null;
+    }
+
+    function addMarkers(locations) {
+      const bounds = new google.maps.LatLngBounds();
+
+      for (const location of locations) {
+        const count = new Set(location.paintings.map(painting => painting.url)).size;
+        const names = [...location.collections].sort();
+        const marker = new google.maps.Marker({
+          map,
+          position: location.position,
+          title: `${names.join(", ")} — ${count} painting${count === 1 ? "" : "s"}`,
+          label: count > 1 ? {
+            text: String(count),
+            color: "#fff",
+            fontSize: count > 99 ? "9px" : "10px",
+            fontWeight: "bold"
+          } : undefined
+        });
+
+        marker.addListener("click", () => {
+          displayLocation(location, locations);
+          map.panTo(location.position);
+        });
+        bounds.extend(location.position);
+      }
+
+      if (!bounds.isEmpty()) map.fitBounds(bounds, 40);
+    }
+
+    function displayAllPaintings(locations) {
+      const mode = document.getElementById("aggregation").value;
+      const groupMap = new Map();
+      const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
+
+      for (const painting of locations.flatMap(location => location.paintings)) {
+        let key = painting.collectionId;
+        let name = painting.collection;
+        if (mode === "city") {
+          key = `${painting.countryCode}|${painting.city}`;
+          name = `${painting.city}, ${regionNames.of(painting.countryCode)}`;
+        } else if (mode === "country") {
+          key = painting.countryCode;
+          name = regionNames.of(painting.countryCode);
+        }
+
+        if (!groupMap.has(key)) {
+          groupMap.set(key, { name, paintings: new Map() });
+        }
+        groupMap.get(key).paintings.set(painting.url, painting);
+      }
+
+      const aggregationGroups = [...groupMap.values()].map(group => ({
+        name: group.name,
+        paintings: [...group.paintings.values()].sort((a, b) => a.title.localeCompare(b.title))
+      })).sort((a, b) =>
+        b.paintings.length - a.paintings.length || a.name.localeCompare(b.name)
+      );
+
+      panel.replaceChildren();
+      const groupLabels = {
+        museum: ["Museums", "collections"],
+        city: ["Cities", "cities"],
+        country: ["Countries", "countries"]
+      };
+      const [title, groupNoun] = groupLabels[mode];
+      const heading = createPanelHeading(
+        title,
+        `${aggregationGroups.length.toLocaleString()} ${groupNoun} sorted by painting count`
+      );
+      const groups = document.createElement("div");
+
+      for (const group of aggregationGroups) {
+        const section = document.createElement("details");
+        section.className = "museum-group";
+        section.open = groups.childElementCount === 0;
+        const groupHeading = document.createElement("summary");
+        const name = document.createElement("span");
+        name.textContent = group.name;
+        const count = document.createElement("span");
+        count.className = "museum-count";
+        count.textContent = `${group.paintings.length} painting${group.paintings.length === 1 ? "" : "s"}`;
+        groupHeading.append(name, count);
+        section.appendChild(groupHeading);
+
+        for (const painting of group.paintings) {
+          section.appendChild(createPaintingCard(painting, mode !== "museum"));
+        }
+        groups.appendChild(section);
+      }
+
+      panel.append(heading, groups);
+      panel.closest(".panel-content").scrollTop = 0;
+    }
+
+    function displayLocation(location, locations) {
+      const paintings = [...new Map(
+        location.paintings.map(painting => [painting.url, painting])
+      ).values()].sort((a, b) => a.title.localeCompare(b.title));
+      const names = [...location.collections].sort().join(" · ");
+      renderPanel(names, paintings, `${paintings.length} Monet painting${paintings.length === 1 ? "" : "s"}`, false, () => {
+        displayAllPaintings(locations);
+      });
+    }
+
+    function createPanelHeading(title, subtitle) {
+      const heading = document.createElement("header");
+      heading.className = "panel-heading";
+      const headingText = document.createElement("div");
+      const titleElement = document.createElement("h2");
+      titleElement.textContent = title;
+      const subtitleElement = document.createElement("p");
+      subtitleElement.textContent = subtitle;
+      headingText.append(titleElement, subtitleElement);
+      heading.appendChild(headingText);
+      return heading;
+    }
+
+    function renderPanel(title, paintings, subtitle, showCollection, showAll) {
+      panel.replaceChildren();
+      const heading = createPanelHeading(title, subtitle);
+
+      if (showAll) {
+        const button = document.createElement("button");
+        button.className = "show-all";
+        button.type = "button";
+        button.textContent = "Show all";
+        button.addEventListener("click", showAll);
+        heading.appendChild(button);
+      }
+
+      const list = document.createElement("div");
+      list.className = "paintings";
+      for (const painting of paintings) {
+        list.appendChild(createPaintingCard(painting, showCollection));
+      }
+
+      panel.append(heading, list);
+      panel.closest(".panel-content").scrollTop = 0;
+    }
+
+    function createPaintingCard(painting, showCollection) {
+      const card = document.createElement("article");
+      card.className = "painting";
+
+      if (painting.image) {
+        const image = document.createElement("img");
+        image.src = painting.image;
+        image.alt = "";
+        image.loading = "lazy";
+        image.referrerPolicy = "no-referrer";
+        card.appendChild(image);
+      } else {
+        const placeholder = document.createElement("div");
+        placeholder.className = "painting-no-image";
+        card.appendChild(placeholder);
+      }
+
+      const details = document.createElement("div");
+      const title = document.createElement("h3");
+      const link = document.createElement("a");
+      link.href = painting.url;
+      link.target = "_blank";
+      link.rel = "noopener";
+      link.textContent = painting.title;
+      title.appendChild(link);
+      details.appendChild(title);
+
+      if (showCollection) {
+        const collection = document.createElement("p");
+        collection.textContent = painting.collection;
+        details.appendChild(collection);
+      }
+
+      card.appendChild(details);
+      return card;
+    }
+
+    async function loadGoogleMaps() {
+      let region = "US";
+
+      try {
+        const response = await fetch("https://ipapi.co/json/");
+        if (response.ok) {
+          const data = await response.json();
+          if (data.country_code) region = data.country_code;
+        }
+      } catch (error) {
+        console.warn("IP lookup failed; using the default map region.", error);
+      }
+
+      const script = document.createElement("script");
+      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDyqMZHQwTEaHclC9ZndrWmUI2k5y_baFs&region=${encodeURIComponent(region)}&callback=initMap`;
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+    }
+
+    loadGoogleMaps();
+  </script>
+</body>
+</html>
