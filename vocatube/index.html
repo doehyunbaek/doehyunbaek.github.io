@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#f5f4ef" />
-  <title>VocaTube — Watch. Read. Understand.</title>
+  <title>VocaTube</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
@@ -16,53 +16,58 @@
       <span class="brand-mark" aria-hidden="true"><span></span></span>
       <span>vocatube</span>
     </a>
+    <nav class="top-nav" aria-label="Main views">
+      <button class="top-nav-tab" id="heatmapMainTab" type="button" aria-selected="false" aria-controls="heatmapView">Heatmap</button>
+      <button class="top-nav-tab active" id="watchMainTab" type="button" aria-selected="true" aria-controls="watchPage">Watch</button>
+      <button class="top-nav-tab" id="ankiMainTab" type="button" aria-selected="false" aria-controls="ankiView">Anki <span id="ankiTabCount">0</span></button>
+    </nav>
     <div class="top-actions">
-      <span class="status" id="transcriptStatus"><i></i> Loading transcript…</span>
       <button class="icon-button" id="themeButton" type="button" aria-label="Toggle dark mode" title="Toggle theme">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
       </button>
-      <a class="github-link" href="https://www.youtube.com/watch?v=L0RafOYa8X4" target="_blank" rel="noreferrer">Open on YouTube <span>↗</span></a>
+      <button class="auth-button" id="authButton" type="button" disabled>Sync unavailable</button>
     </div>
   </header>
 
   <main>
-    <section class="intro">
-      <div class="eyebrow">FOCUSED VIEWING</div>
-      <h1>Watch. Read. <em>Understand.</em></h1>
-      <p>Follow every word without losing the moment.</p>
-    </section>
-
-    <section class="workspace" aria-label="Video and transcript workspace">
+    <div id="watchPage">
+    <section class="workspace" id="watchView" aria-label="Video and transcript workspace">
       <article class="video-column">
         <div class="video-shell">
-          <iframe
-            id="player"
-            src="https://www.youtube.com/embed/L0RafOYa8X4?enablejsapi=1&playsinline=1&rel=0"
-            title="Drohnenvorfälle in Leipzig: Ermittlungen am Flughafen gehen weiter"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen>
-          </iframe>
+          <div class="video-empty" id="videoEmpty">Select a video below to start watching.</div>
+          <div id="player"></div>
         </div>
 
-        <div class="video-info">
+        <div class="video-info" id="videoInfo" hidden>
           <div class="video-meta">
             <span class="topic">NEWS · GERMANY</span>
-            <span class="duration">0:33</span>
+            <span class="duration" id="videoDuration"></span>
           </div>
-          <h2>Drohnenvorfälle in Leipzig: Ermittlungen am Flughafen gehen weiter</h2>
-          <a class="channel" href="https://www.youtube.com/@StZStN" target="_blank" rel="noreferrer">
-            <span class="channel-avatar">S</span>
-            <span><strong>Stuttgarter Zeitung &amp; Stuttgarter Nachrichten</strong><small>Original video on YouTube</small></span>
-            <span class="arrow">↗</span>
-          </a>
+          <h2 id="videoTitle"></h2>
         </div>
 
-        <aside class="tip">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4M8.5 15.5A7 7 0 1 1 15.5 15.5C14.6 16.2 14 17 14 18h-4c0-1-.6-1.8-1.5-2.5Z"/></svg>
-          <div><strong>Quick tip</strong><p>Click any transcript line to jump to that moment in the video.</p></div>
-        </aside>
+        <section class="vocab-panel" aria-labelledby="vocabTitle">
+          <div class="vocab-head">
+            <div><span class="vocab-label" id="vocabTitle">VOCABULARY</span> <span class="vocab-count" id="vocabCount">0 words</span></div>
+            <div class="vocab-head-actions">
+              <button id="clearVocab" type="button">Clear all</button>
+              <label class="meaning-only"><input id="meaningOnlyToggle" type="checkbox" checked><span>Only words with meanings</span></label>
+              <button class="transfer-button" id="transferToAnki" type="button">Move to Anki ↓</button>
+            </div>
+          </div>
+          <div class="vocab-list" id="vocabList">
+            <span class="vocab-empty">Click a transcript word to save it temporarily.</span>
+          </div>
+        </section>
+
+        <section class="anki-storage-panel" aria-labelledby="ankiStorageTitle">
+          <div class="vocab-head">
+            <div><span class="vocab-label" id="ankiStorageTitle">ANKI STACKS</span> <span class="vocab-count" id="ankiStorageCount">0 words</span></div>
+          </div>
+          <div class="vocab-list" id="ankiStorageList">
+            <span class="vocab-empty">Move vocabulary here for scheduled review.</span>
+          </div>
+        </section>
       </article>
 
       <article class="transcript-card">
@@ -89,16 +94,6 @@
 
         <div class="transcript-list" id="transcriptList" aria-live="polite"></div>
 
-        <section class="vocab-panel" aria-labelledby="vocabTitle">
-          <div class="vocab-head">
-            <div><span class="vocab-label">MY VOCABULARY</span> <span class="vocab-count" id="vocabCount">0 words</span></div>
-            <button id="clearVocab" type="button">Clear all</button>
-          </div>
-          <div class="vocab-list" id="vocabList">
-            <span class="vocab-empty">Click a transcript word to save it.</span>
-          </div>
-        </section>
-
         <div class="transcript-footer">
           <span id="lineCount">14 segments</span>
           <label class="follow-control">
@@ -109,9 +104,121 @@
         </div>
       </article>
     </section>
+
+    <nav class="view-tabs" aria-label="Video collections">
+      <button class="view-tab active" id="shortsTab" type="button" aria-selected="true" aria-controls="shortsView">Shorts <span id="shortsTabCount"></span></button>
+      <button class="view-tab" id="subscriptionsTab" type="button" aria-selected="false" aria-controls="subscriptionsView">Subscriptions</button>
+      <button class="view-tab" id="playlistTab" type="button" aria-selected="false" aria-controls="playlistView">Playlists</button>
+      <button class="watched-filter" id="watchedFilter" type="button" aria-pressed="false">
+        <span class="watched-check" aria-hidden="true">✓</span>
+        <span id="watchedFilterLabel">Hide watched</span>
+      </button>
+      <button class="watched-filter transcript-filter" id="transcriptFilter" type="button" aria-pressed="true">
+        <span class="watched-check" aria-hidden="true">✓</span>
+        <span id="transcriptFilterLabel">Transcripts only</span>
+      </button>
+    </nav>
+
+    <section class="playlist-card playlist-view" id="playlistView" aria-label="Playlists" hidden>
+      <div class="playlist-head">
+        <div class="collection-source">
+          <span class="playlist-label">PLAYLISTS</span>
+          <div class="source-buttons" id="playlistSources" role="group" aria-label="Choose playlists"></div>
+        </div>
+        <div class="collection-head-actions"><span id="playlistCount"></span><button id="addPlaylist" type="button">+ Add</button></div>
+      </div>
+      <div class="playlist-list" id="playlistList" aria-live="polite">
+        <div class="playlist-empty">Loading videos…</div>
+      </div>
+    </section>
+
+    <section class="subscriptions-view" id="subscriptionsView" aria-label="Subscriptions" hidden>
+      <div class="subscription-head">
+        <div class="subscription-channel">
+          <span class="subscription-avatar" id="subscriptionAvatar">A</span>
+          <span class="collection-source"><span class="playlist-label">SUBSCRIBED CHANNELS</span><span class="source-buttons" id="subscriptionSources" role="group" aria-label="Choose subscriptions"></span></span>
+        </div>
+        <div class="collection-head-actions"><span id="subscriptionsCount"></span><button id="addSubscription" type="button">+ Add</button></div>
+      </div>
+      <div class="playlist-list subscriptions-list" id="subscriptionsList" aria-live="polite">
+        <div class="playlist-empty">Loading channel videos…</div>
+      </div>
+    </section>
+
+    <section class="shorts-view" id="shortsView" aria-labelledby="shortsTitle">
+      <div class="shorts-head">
+        <div><span class="playlist-label">FROM YOUR SUBSCRIPTIONS</span><h2 id="shortsTitle">Shorts recommendations</h2></div>
+        <span id="shortsCount">Loading…</span>
+      </div>
+      <div class="shorts-grid" id="shortsList" aria-live="polite">
+        <div class="playlist-empty">Finding Shorts with transcripts…</div>
+      </div>
+    </section>
+    </div>
+
+    <section class="anki-view" id="ankiView" aria-labelledby="ankiTitle" hidden>
+      <div class="anki-head">
+        <div><span class="playlist-label">SAVED VOCABULARY</span><h1 id="ankiTitle">Anki cards</h1></div>
+        <span id="ankiCount">0 cards</span>
+      </div>
+      <div class="anki-progress" aria-label="Study progress"><span id="ankiProgress"></span></div>
+      <div class="anki-study" id="ankiList" aria-live="polite">
+        <div class="anki-stack" id="ankiStack">
+          <article class="anki-swipe-card anki-next-card" id="ankiNextCard" aria-hidden="true"></article>
+          <article class="anki-swipe-card anki-current-card" id="ankiCurrentCard" tabindex="0">
+            <div class="anki-rating-badge" id="ankiRatingBadge" hidden></div>
+            <span class="anki-card-label">GERMAN</span>
+            <h2 id="ankiWord"></h2>
+            <div class="anki-answer" id="ankiAnswer" hidden>
+              <p id="ankiMeaning"></p>
+              <p class="anki-context" id="ankiSentence"></p>
+            </div>
+            <span class="anki-card-hint" id="ankiHint">Tap to reveal answer</span>
+          </article>
+        </div>
+        <div class="anki-empty" id="ankiEmpty" hidden>Save words from a transcript to create Anki cards.</div>
+        <div class="anki-actions" id="ankiActions" aria-label="Anki ratings">
+          <button class="anki-action again" type="button" data-anki-rating="again">↓ Again<small></small></button>
+          <button class="anki-action hard" type="button" data-anki-rating="hard">← Hard<small></small></button>
+          <button class="anki-action good" type="button" data-anki-rating="good">→ Good<small></small></button>
+          <button class="anki-action easy" type="button" data-anki-rating="easy">↑ Easy<small></small></button>
+        </div>
+        <div class="anki-footer">
+          <button id="ankiUndo" type="button">Undo</button>
+          <span>Swipe or use arrow keys</span>
+          <button id="ankiReset" type="button">Study again</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="heatmap-view" id="heatmapView" aria-labelledby="heatmapTitle" hidden>
+      <div class="heatmap-head">
+        <div><span class="playlist-label">ANKI ACTIVITY</span><h1 id="heatmapTitle">Review heatmap</h1></div>
+        <span id="heatmapSummary">0 reviews</span>
+      </div>
+      <div class="heatmap-scroll">
+        <div class="heatmap-months" id="heatmapMonths" aria-hidden="true"></div>
+        <div class="heatmap-body">
+          <div class="heatmap-weekdays" aria-hidden="true"><span>Mon</span><span>Wed</span><span>Fri</span></div>
+          <div class="heatmap-grid" id="heatmapGrid" role="grid" aria-label="Anki reviews over the past year"></div>
+        </div>
+      </div>
+      <div class="heatmap-footer"><span class="heatmap-legend">Less <i></i><i></i><i></i><i></i><i></i> More</span></div>
+      <section class="heatmap-details" id="heatmapDetails" aria-live="polite">
+        <h2 id="heatmapDetailsTitle">Select a day</h2>
+        <p id="heatmapDetailsEmpty">Click a square to see its activity.</p>
+        <div class="heatmap-details-list" id="heatmapDetailsList"></div>
+      </section>
+    </section>
   </main>
 
   <div class="toast" id="toast" role="status">Transcript copied</div>
+  <script src="google-api-config.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+  <script src="auth.js"></script>
+  <script src="vendor/ts-fsrs.umd.js"></script>
   <script src="script.js"></script>
   <script src="https://www.youtube.com/iframe_api"></script>
 </body>
