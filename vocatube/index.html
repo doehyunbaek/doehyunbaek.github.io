@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f5f4ef" />
+  <title>VocaTube — Watch. Read. Understand.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="VocaTube home">
+      <span class="brand-mark" aria-hidden="true"><span></span></span>
+      <span>vocatube</span>
+    </a>
+    <div class="top-actions">
+      <span class="status" id="transcriptStatus"><i></i> Loading transcript…</span>
+      <button class="icon-button" id="themeButton" type="button" aria-label="Toggle dark mode" title="Toggle theme">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
+      </button>
+      <a class="github-link" href="https://www.youtube.com/watch?v=L0RafOYa8X4" target="_blank" rel="noreferrer">Open on YouTube <span>↗</span></a>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro">
+      <div class="eyebrow">FOCUSED VIEWING</div>
+      <h1>Watch. Read. <em>Understand.</em></h1>
+      <p>Follow every word without losing the moment.</p>
+    </section>
+
+    <section class="workspace" aria-label="Video and transcript workspace">
+      <article class="video-column">
+        <div class="video-shell">
+          <iframe
+            id="player"
+            src="https://www.youtube.com/embed/L0RafOYa8X4?enablejsapi=1&playsinline=1&rel=0"
+            title="Drohnenvorfälle in Leipzig: Ermittlungen am Flughafen gehen weiter"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <div class="video-info">
+          <div class="video-meta">
+            <span class="topic">NEWS · GERMANY</span>
+            <span class="duration">0:33</span>
+          </div>
+          <h2>Drohnenvorfälle in Leipzig: Ermittlungen am Flughafen gehen weiter</h2>
+          <a class="channel" href="https://www.youtube.com/@StZStN" target="_blank" rel="noreferrer">
+            <span class="channel-avatar">S</span>
+            <span><strong>Stuttgarter Zeitung &amp; Stuttgarter Nachrichten</strong><small>Original video on YouTube</small></span>
+            <span class="arrow">↗</span>
+          </a>
+        </div>
+
+        <aside class="tip">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4M8.5 15.5A7 7 0 1 1 15.5 15.5C14.6 16.2 14 17 14 18h-4c0-1-.6-1.8-1.5-2.5Z"/></svg>
+          <div><strong>Quick tip</strong><p>Click any transcript line to jump to that moment in the video.</p></div>
+        </aside>
+      </article>
+
+      <article class="transcript-card">
+        <div class="transcript-head">
+          <div>
+            <div class="label-row"><span>TRANSCRIPT</span><span class="auto">AUTO-GENERATED</span></div>
+            <h2>German <span>(Original)</span></h2>
+          </div>
+          <div class="head-buttons">
+            <button class="small-icon" id="copyButton" type="button" title="Copy transcript" aria-label="Copy transcript">
+              <svg viewBox="0 0 24 24"><path d="M8 8h11v12H8zM5 16H4V4h11v1"/></svg>
+            </button>
+            <button class="small-icon" id="downloadButton" type="button" title="Download transcript" aria-label="Download transcript">
+              <svg viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M5 20h14"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <input id="searchInput" type="search" placeholder="Search in transcript…" autocomplete="off" />
+          <kbd>⌘ K</kbd>
+        </div>
+
+        <div class="transcript-list" id="transcriptList" aria-live="polite"></div>
+
+        <section class="vocab-panel" aria-labelledby="vocabTitle">
+          <div class="vocab-head">
+            <div><span class="vocab-label">MY VOCABULARY</span> <span class="vocab-count" id="vocabCount">0 words</span></div>
+            <button id="clearVocab" type="button">Clear all</button>
+          </div>
+          <div class="vocab-list" id="vocabList">
+            <span class="vocab-empty">Click a transcript word to save it.</span>
+          </div>
+        </section>
+
+        <div class="transcript-footer">
+          <span id="lineCount">14 segments</span>
+          <label class="follow-control">
+            <span>Auto-follow</span>
+            <input id="followToggle" type="checkbox" checked />
+            <span class="toggle" aria-hidden="true"></span>
+          </label>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status">Transcript copied</div>
+  <script src="script.js"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+</body>
+</html>
