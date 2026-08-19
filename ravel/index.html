@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A listening catalogue of Maurice Ravel's compositions.">
+  <title>Ravel — A Listening Catalogue</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Libre+Caslon+Display&display=swap" rel="stylesheet">
+  <style>
+:root{--ink:#18251d;--cream:#f1eee3;--paper:#f8f6ee;--orange:#ee5a2a;--sage:#a9b3a0;--line:rgba(24,37,29,.2)}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:"DM Sans",sans-serif}a{color:inherit}.site-header{height:86px;display:flex;align-items:center;padding:0 4.5vw;border-bottom:1px solid var(--line);position:relative;top:0;width:100%;z-index:5}.wordmark{text-decoration:none;font-family:"Libre Caslon Display",serif;font-size:28px;letter-spacing:-2px}.wordmark span{color:var(--orange)}nav{display:flex;gap:34px;margin-left:auto;margin-right:45px}nav a,.listen-pill{font-size:13px;text-decoration:none}.listen-pill{border:1px solid var(--ink);border-radius:100px;padding:11px 17px}.listen-pill span{color:var(--orange);margin-left:10px}.hero{min-height:760px;height:100vh;position:relative;overflow:hidden;display:grid;grid-template-columns:46% 54%;padding:86px 4.5vw 0}.hero-copy{align-self:center;z-index:2;padding-bottom:30px}.eyebrow{text-transform:uppercase;letter-spacing:.2em;font-size:11px;font-weight:600;margin:0 0 25px}.hero h1{font-family:"Libre Caslon Display",serif;font-size:clamp(74px,9vw,142px);line-height:.76;letter-spacing:-.06em;font-weight:400;margin:0 0 46px}.hero h1 em{font-weight:400;color:var(--orange)}.intro{font-family:"Libre Caslon Display",serif;font-size:18px;line-height:1.55;max-width:460px;margin-left:15%;}.text-link{display:inline-flex;text-decoration:none;border-bottom:1px solid;padding:9px 0;font-size:13px;margin:25px 0 0 15%;gap:50px}.hero-art{position:relative;height:100%;min-height:650px}.sun{position:absolute;width:min(38vw,550px);height:min(38vw,550px);border-radius:50%;background:var(--orange);top:12%;left:10%}.portrait-frame{position:absolute;z-index:2;left:18%;top:18%;width:min(29vw,410px);height:62%;background:#2a382d;overflow:hidden}.portrait-frame p{position:absolute;color:var(--cream);font-family:"Libre Caslon Display",serif;font-size:15px;line-height:1.4;bottom:22px;left:25px;margin:0}.portrait{position:absolute;inset:0;filter:grayscale(1);opacity:.95}.hair{position:absolute;width:44%;height:43%;background:#0e1510;border-radius:48% 49% 35% 30%;left:29%;top:8%;transform:rotate(-4deg)}.face{position:absolute;width:29%;height:31%;background:#acaca2;border-radius:42% 45% 48% 46%;left:39%;top:17%;transform:rotate(4deg)}.face:before{content:"";position:absolute;left:65%;top:35%;width:28%;height:8%;background:#5f615b;transform:rotate(13deg)}.collar{position:absolute;left:33%;top:43%;width:38%;height:20%;background:#d5d1c2;clip-path:polygon(0 0,50% 35%,100% 0,80% 100%,15% 100%)}.coat{position:absolute;left:11%;top:52%;width:78%;height:49%;background:#20251f;clip-path:polygon(20% 0,80% 0,100% 100%,0 100%)}.orbit{position:absolute;z-index:3;width:95%;height:80%;top:2%;left:-8%;overflow:visible;pointer-events:none}.orbit ellipse{fill:none;stroke:var(--ink);stroke-width:1}.date{position:absolute;font-family:"Libre Caslon Display",serif;font-size:12px;z-index:4}.date-a{left:2%;top:19%}.date-b{right:5%;bottom:19%}.scroll-note{position:absolute;right:4.5vw;bottom:35px;font-size:10px;text-transform:uppercase;letter-spacing:.15em;writing-mode:vertical-rl}.scroll-note span{color:var(--orange);margin-top:12px}.catalogue{background:var(--paper);padding:110px 4.5vw 130px}.section-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:70px}.section-head h2,.about h2{font-family:"Libre Caslon Display",serif;font-size:clamp(48px,6vw,86px);line-height:.95;letter-spacing:-.04em;font-weight:400;margin:0}.section-note{font-family:"Libre Caslon Display",serif;line-height:1.5;font-size:15px}.controls{border-top:1px solid var(--ink);border-bottom:1px solid var(--line);padding:18px 0;display:flex;gap:22px;align-items:center}.search-wrap{display:flex;align-items:center;gap:10px;min-width:270px}.search-wrap span{font-size:22px}.search-wrap input{border:0;background:transparent;color:var(--ink);font:13px "DM Sans";outline:none;width:100%}.filters{display:flex;gap:8px;flex:1}.filter-btn{background:transparent;border:1px solid var(--line);padding:9px 14px;border-radius:100px;font:11px "DM Sans";cursor:pointer}.filter-btn:hover,.filter-btn.active{background:var(--ink);color:var(--cream);border-color:var(--ink)}.sort-wrap{font-size:11px;text-transform:uppercase;letter-spacing:.12em}.sort-wrap select{font:12px "DM Sans";border:0;background:transparent;margin-left:8px;color:var(--ink)}.results-line{display:flex;align-items:center;gap:15px;margin:26px 0 34px;font-size:11px;text-transform:uppercase;letter-spacing:.12em}.results-line .rule{height:1px;background:var(--line);flex:1}.results-line button{border:0;background:none;font:inherit;color:var(--ink);cursor:pointer}.source-note{max-width:760px;margin:-10px 0 28px;font-size:10px;line-height:1.6;color:rgba(24,37,29,.65)}.source-note a{text-underline-offset:3px}.table-wrap{width:100%;overflow-x:auto;border-top:1px solid var(--ink)}.works-table{width:100%;border-collapse:collapse;min-width:820px}.works-table th{text-align:left;padding:14px 12px;border-bottom:1px solid var(--ink);font-size:9px;text-transform:uppercase;letter-spacing:.16em;font-weight:600}.sort-header{display:flex;align-items:center;gap:7px;border:0;background:none;color:inherit;padding:0;font:inherit;text-transform:inherit;letter-spacing:inherit;cursor:pointer}.sort-header span{font-size:12px;opacity:.4}.sort-header:hover span,.sort-header.active span{color:var(--orange);opacity:1}.works-table td{padding:22px 12px;border-bottom:1px solid var(--line);font-size:12px;vertical-align:middle}.works-table tbody tr{transition:background .2s}.works-table tbody tr:hover{background:#ebe6d8}.row-number{color:var(--orange);font-size:10px!important}.work-title{width:34%}.work-title strong{display:block;font:23px/1.1 "Libre Caslon Display",serif;font-weight:400}.work-title em{display:block;margin-top:5px;font:italic 12px "Libre Caslon Display",serif;opacity:.6}.table-listen{display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid var(--ink);border-radius:100px;padding:9px 13px;text-decoration:none;text-transform:uppercase;letter-spacing:.1em;font-size:9px;white-space:nowrap}.table-listen:hover{background:var(--orange);border-color:var(--orange);color:white}.table-listen span{display:inline}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.empty{text-align:center;padding:100px 0}.empty span{font-size:40px;color:var(--orange)}.empty h3{font:36px "Libre Caslon Display";margin:15px}.about{padding:130px 4.5vw;display:grid;grid-template-columns:8% 42% 42%;gap:4%;position:relative}.about-number{font:12px "Libre Caslon Display";color:var(--orange);padding-top:38px}.about-copy{padding-top:35px;font-family:"Libre Caslon Display",serif;font-size:19px;line-height:1.6}.about-copy>p:first-child{font-size:26px;line-height:1.4;margin-top:0}.facts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);margin-top:50px;padding-top:22px;gap:15px}.facts strong{display:block;font:35px "Libre Caslon Display"}.facts span{font:10px "DM Sans";text-transform:uppercase;letter-spacing:.1em}footer{background:var(--ink);color:var(--cream);padding:35px 4.5vw;display:flex;align-items:center;justify-content:space-between;font-size:11px}footer a{text-decoration:none}dialog{border:0;padding:55px;background:var(--cream);color:var(--ink);width:min(570px,calc(100% - 32px));box-shadow:0 30px 100px #0007}dialog::backdrop{background:rgba(15,25,18,.75);backdrop-filter:blur(4px)}dialog .close{position:absolute;right:20px;top:15px;border:0;background:none;font-size:30px;cursor:pointer;color:var(--ink)}.dialog-kicker{font-size:10px;letter-spacing:.17em;text-transform:uppercase;color:var(--orange)}dialog h2{font:48px/1 "Libre Caslon Display";letter-spacing:-.03em;margin:20px 0 8px}.dialog-original{font:italic 16px "Libre Caslon Display";opacity:.6}.dialog-meta{display:flex;gap:25px;border-block:1px solid var(--line);padding:15px 0;margin:28px 0;font-size:11px;text-transform:uppercase;letter-spacing:.1em}.dialog-note{font:18px/1.55 "Libre Caslon Display"}.youtube-btn{margin-top:25px;background:var(--orange);color:white;text-decoration:none;display:flex;justify-content:space-between;align-items:center;padding:17px 20px;font-size:12px;text-transform:uppercase;letter-spacing:.1em}.youtube-btn:hover{background:var(--ink)}@media(max-width:900px){.hero{grid-template-columns:1fr 1fr}.intro,.text-link{margin-left:0}.hero h1{font-size:75px}.works-table td{padding-block:18px}.filters{overflow:auto}.controls{flex-wrap:wrap}.about{grid-template-columns:8% 1fr}.about-copy{grid-column:2}.section-note{display:none}}@media(max-width:600px){.site-header{height:68px}.site-header nav{display:none}.listen-pill{margin-left:auto}.hero{height:auto;min-height:900px;display:block;padding-top:135px}.hero h1{font-size:69px}.hero-art{height:470px;min-height:0;margin-top:20px}.sun{width:330px;height:330px;left:3%;top:10%}.portrait-frame{width:250px;height:350px;left:13%;top:15%}.orbit{width:115%;left:-15%}.scroll-note{display:none}.catalogue{padding:80px 18px}.section-head{margin-bottom:45px}.search-wrap{width:100%}.sort-wrap{margin-left:auto}.filters{order:3;width:100%;flex-basis:100%;padding-top:5px}.works-table{min-width:720px}.work-title{width:30%}.table-listen span{display:none}.about{padding:85px 18px;display:block}.about-number{display:none}.about-copy>p:first-child{font-size:22px}.facts{grid-template-columns:1fr 1fr}.section-head h2,.about h2{font-size:52px}dialog{padding:40px 25px}dialog h2{font-size:38px}footer p{display:none}}
+
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="#top" aria-label="Ravel catalogue home">MR<span>•</span></a>
+    <nav aria-label="Primary navigation">
+      <a href="#catalogue">Catalogue</a>
+    </nav>
+    <a class="listen-pill" href="#catalogue">Start listening <span>↘</span></a>
+  </header>
+
+  <main id="top">
+    <section class="catalogue" id="catalogue">
+      <div class="section-head">
+        <div><p class="eyebrow">The works</p><h2>Listening catalogue</h2></div>
+        <p class="section-note">70 surviving and recordable original works.<br>Times shown are exact linked-recording runtimes.</p>
+      </div>
+
+      <div class="controls" aria-label="Catalogue controls">
+        <label class="search-wrap">
+          <span aria-hidden="true">⌕</span>
+          <input id="search" type="search" placeholder="Search title, year, or catalogue no." autocomplete="off">
+        </label>
+        <div class="filters" id="filters" role="group" aria-label="Filter by genre"></div>
+
+      </div>
+
+      <div class="results-line"><span id="resultCount"></span><span class="rule"></span><button id="randomBtn" type="button">Surprise me ↗</button></div>
+      <p class="source-note">Catalogue details checked against the <a href="https://en.wikipedia.org/wiki/List_of_compositions_by_Maurice_Ravel" target="_blank" rel="noopener">Marnat catalogue listing</a> and <a href="https://imslp.org/wiki/Category:Ravel,_Maurice" target="_blank" rel="noopener">IMSLP scores</a>. Runtimes come from the published metadata of each linked recording—not estimates.</p>
+      <div class="table-wrap">
+        <table class="works-table">
+          <thead><tr>
+            <th>No.</th>
+            <th aria-sort="none"><button class="sort-header" type="button" data-sort="title">Composition <span>↕</span></button></th>
+            <th aria-sort="ascending"><button class="sort-header active" type="button" data-sort="year">Year <span>↑</span></button></th>
+            <th aria-sort="none"><button class="sort-header" type="button" data-sort="m">Catalogue <span>↕</span></button></th>
+            <th aria-sort="none"><button class="sort-header" type="button" data-sort="genre">Form <span>↕</span></button></th>
+            <th aria-sort="none"><button class="sort-header" type="button" data-sort="duration">Video runtime <span>↕</span></button></th>
+            <th><span class="sr-only">Listen</span></th>
+          </tr></thead>
+          <tbody id="workGrid"></tbody>
+        </table>
+      </div>
+      <div class="empty" id="empty" hidden><span>∅</span><h3>No works found</h3><p>Try another title or clear your filters.</p></div>
+    </section>
+
+  </main>
+
+  <footer><a class="wordmark" href="#top">MR<span>•</span></a><p>Made for curious ears.</p><a href="#top">Back to top ↑</a></footer>
+
+  <script>
+const works = [
+  {title:'Menuet antique', original:'Menuet antique', year:1895, m:'M.7', genre:'Piano', duration:'7 min', note:'Ravel’s first published work: an old dance viewed through distinctly modern harmonies.'},
+  {title:'Pavane for a Dead Princess', original:'Pavane pour une infante défunte', year:1899, m:'M.19', genre:'Piano', duration:'6 min', note:'Not a funeral lament, but an imagined pavane a princess might once have danced at the Spanish court.'},
+  {title:'Jeux d’eau', original:'Jeux d’eau', year:1901, m:'M.30', genre:'Piano', duration:'6 min', note:'A virtuoso fountain of arpeggios, written under the epigraph “the river god laughing as the water tickles him.”'},
+  {title:'String Quartet in F major', original:'Quatuor à cordes', year:1903, m:'M.35', genre:'Chamber', duration:'29 min', note:'Classical poise and luminous textures meet in Ravel’s only string quartet, dedicated to Gabriel Fauré.'},
+  {title:'Shéhérazade', original:'Trois poèmes pour voix et orchestre', year:1903, m:'M.41', genre:'Vocal', duration:'17 min', note:'Three sensuous songs after Tristan Klingsor, perfumed with Ravel’s imagined sounds of Asia.'},
+  {title:'Sonatine', original:'Sonatine pour piano', year:1905, m:'M.40', genre:'Piano', duration:'12 min', note:'A compact, crystalline triptych whose modest title conceals music of great elegance and difficulty.'},
+  {title:'Miroirs', original:'Miroirs pour piano', year:1905, m:'M.43', genre:'Piano', duration:'29 min', note:'Five audacious reflections: moths, sad birds, ocean waves, Spanish song, and bells across a valley.'},
+  {title:'Introduction and Allegro', original:'Introduction et allegro', year:1905, m:'M.46', genre:'Chamber', duration:'11 min', note:'A miniature concerto for harp, framed by flute, clarinet, and string quartet.'},
+  {title:'Histoires naturelles', original:'Cinq mélodies', year:1906, m:'M.50', genre:'Vocal', duration:'16 min', note:'Five sly animal portraits whose conversational vocal writing caused a small Parisian scandal.'},
+  {title:'Rapsodie espagnole', original:'Rapsodie espagnole', year:1908, m:'M.54', genre:'Orchestral', duration:'16 min', note:'Four atmospheric movements—and one of the first works to reveal Ravel’s full command of the orchestra.'},
+  {title:'Gaspard de la nuit', original:'Trois poèmes pour piano', year:1908, m:'M.55', genre:'Piano', duration:'23 min', note:'Three dark fantasies after Aloysius Bertrand, conceived to surpass Balakirev’s Islamey in difficulty.'},
+  {title:'Ma mère l’Oye', original:'Ma mère l’Oye', year:1910, m:'M.60', genre:'Orchestral', duration:'17 min', note:'Tender fairy-tale miniatures inspired by Perrault, first written for piano duet and later orchestrated.'},
+  {title:'Valses nobles et sentimentales', original:'Valses nobles et sentimentales', year:1911, m:'M.61', genre:'Piano', duration:'16 min', note:'Eight compressed waltzes paying homage to Schubert while pushing harmony toward the modern age.'},
+  {title:'Daphnis et Chloé', original:'Symphonie chorégraphique', year:1912, m:'M.57', genre:'Stage', duration:'55 min', note:'Ravel’s largest work: a vast choreographic symphony culminating in one of music’s most radiant sunrises.'},
+  {title:'Trois poèmes de Mallarmé', original:'Trois poèmes de Stéphane Mallarmé', year:1913, m:'M.64', genre:'Vocal', duration:'13 min', note:'Mallarmé’s elusive poetry set for soprano and a delicately unusual chamber ensemble.'},
+  {title:'Piano Trio in A minor', original:'Trio avec piano', year:1914, m:'M.67', genre:'Chamber', duration:'28 min', note:'Basque rhythms, Malaysian verse forms, and brilliant instrumental colour in a perfectly balanced design.'},
+  {title:'Le Tombeau de Couperin', original:'Le Tombeau de Couperin', year:1917, m:'M.68', genre:'Piano', duration:'25 min', note:'A graceful Baroque suite, each movement dedicated to a friend lost in the First World War.'},
+  {title:'La Valse', original:'Poème chorégraphique', year:1920, m:'M.72', genre:'Orchestral', duration:'13 min', note:'The Viennese waltz materializes, whirls with dangerous splendour, and finally tears itself apart.'},
+  {title:'Sonata for Violin and Cello', original:'Sonate pour violon et violoncelle', year:1922, m:'M.73', genre:'Chamber', duration:'21 min', note:'Spare, acerbic counterpoint dedicated to the memory of Claude Debussy.'},
+  {title:'L’Enfant et les sortilèges', original:'Fantaisie lyrique en deux parties', year:1925, m:'M.71', genre:'Stage', duration:'45 min', note:'Colette’s unruly child meets singing furniture and wounded creatures in Ravel’s magical one-act opera.'},
+  {title:'Chansons madécasses', original:'Chansons madécasses', year:1926, m:'M.78', genre:'Vocal', duration:'13 min', note:'Three intense songs for voice, flute, cello, and piano—among Ravel’s most daring chamber textures.'},
+  {title:'Violin Sonata No. 2', original:'Sonate pour violon et piano', year:1927, m:'M.77', genre:'Chamber', duration:'18 min', note:'Ravel emphasizes the instruments’ incompatibility, even introducing American blues in the central movement.'},
+  {title:'Boléro', original:'Boléro pour orchestre', year:1928, m:'M.81', genre:'Orchestral', duration:'15 min', note:'One rhythm, two melodies, and an immense unbroken crescendo: Ravel’s famous experiment in orchestral colour.'},
+  {title:'Piano Concerto for the Left Hand', original:'Concerto pour la main gauche', year:1930, m:'M.82', genre:'Concerto', duration:'19 min', note:'Commissioned by pianist Paul Wittgenstein, this one-movement concerto conjures a full two-handed world from one hand.'},
+  {title:'Piano Concerto in G major', original:'Concerto pour piano en sol majeur', year:1931, m:'M.83', genre:'Concerto', duration:'22 min', note:'Jazz sparkle and Basque wit surround one of Ravel’s most serene and beautiful slow movements.'},
+  {title:'Don Quichotte à Dulcinée', original:'Trois chansons', year:1932, m:'M.84', genre:'Vocal', duration:'7 min', note:'Ravel’s final completed work: three sharply characterized songs of love, prayer, and drinking.'},
+  {title:'Ballade de la reine morte d’aimer', original:'Ballade de la reine morte d’aimer', year:1893, m:'M.4', genre:'Vocal', duration:'5 min', note:'An early song on a poem by Roland de Marès.'},
+  {title:'Sérénade grotesque', original:'Sérénade grotesque', year:1893, m:'M.5', genre:'Piano', duration:'4 min', note:'A sharply characterized early piano miniature, published posthumously.'},
+  {title:'Un grand sommeil noir', original:'Un grand sommeil noir', year:1895, m:'M.6', genre:'Vocal', duration:'3 min', note:'A darkly suspended setting of Paul Verlaine.'},
+  {title:'Sites auriculaires', original:'Habanera · Entre cloches', year:1897, m:'M.8/13', genre:'Piano', duration:'8 min', note:'Two pieces for two pianos, including the Habanera later reused in Rapsodie espagnole.'},
+  {title:'Sainte', original:'Sainte', year:1896, m:'M.9', genre:'Vocal', duration:'3 min', note:'A restrained setting of Stéphane Mallarmé.'},
+  {title:'D’Anne jouant de l’espinette', original:'D’Anne jouant de l’espinette', year:1896, m:'M.10', genre:'Vocal', duration:'3 min', note:'A song after Clément Marot for voice and keyboard.'},
+  {title:'La Parade', original:'Ballet pour piano', year:1896, m:'M.11', genre:'Piano', duration:'12 min', note:'An early ballet sketch comprising waltzes, marches, and a mazurka.'},
+  {title:'Violin Sonata No. 1', original:'Sonate posthume', year:1897, m:'M.12', genre:'Chamber', duration:'15 min', note:'A single-movement student sonata rediscovered and published after Ravel’s death.'},
+  {title:'Chanson du rouet', original:'Chanson du rouet', year:1898, m:'M.15', genre:'Vocal', duration:'3 min', note:'An early song on a poem by Leconte de Lisle.'},
+  {title:'Si morne !', original:'Si morne !', year:1898, m:'M.16', genre:'Vocal', duration:'3 min', note:'A sombre early setting of Émile Verhaeren.'},
+  {title:'Shéhérazade Overture', original:'Ouverture de féerie', year:1898, m:'M.17', genre:'Orchestral', duration:'14 min', note:'The surviving overture to Ravel’s abandoned first operatic project.'},
+  {title:'D’Anne qui me jecta de la neige', original:'D’Anne qui me jecta de la neige', year:1899, m:'M.21', genre:'Vocal', duration:'2 min', note:'A compact song after Clément Marot.'},
+  {title:'Callirhoé', original:'Cantate', year:1900, m:'M.22', genre:'Choral', duration:'12 min', note:'Ravel’s partially surviving Prix de Rome cantata.'},
+  {title:'Four Fugues', original:'Fugues of 1900–1903', year:1900, m:'M.23/27/32/36', genre:'Piano', duration:'11 min', note:'Four surviving contrapuntal studies written around Ravel’s Prix de Rome attempts.'},
+  {title:'Les Bayadères', original:'Cantate', year:1900, m:'M.25', genre:'Choral', duration:'15 min', note:'A Prix de Rome cantata for soprano, chorus, and orchestra.'},
+  {title:'Tout est lumière', original:'Cantate', year:1901, m:'M.28', genre:'Choral', duration:'13 min', note:'A luminous Prix de Rome cantata setting Victor Hugo.'},
+  {title:'Myrrha', original:'Cantate', year:1901, m:'M.29', genre:'Choral', duration:'18 min', note:'The cantata that earned Ravel second place in the 1901 Prix de Rome.'},
+  {title:'Sémiramis', original:'Cantate', year:1902, m:'M.31', genre:'Choral', duration:'16 min', note:'A surviving student cantata for tenor and orchestra.'},
+  {title:'La Nuit', original:'La Nuit', year:1902, m:'M.33', genre:'Choral', duration:'5 min', note:'A Prix de Rome chorus for soprano, mixed choir, and orchestra.'},
+  {title:'Alcyone', original:'Cantate', year:1902, m:'M.34', genre:'Choral', duration:'17 min', note:'A dramatic Prix de Rome cantata for three solo voices and orchestra.'},
+  {title:'Matinée de Provence', original:'Matinée de Provence', year:1903, m:'M.37', genre:'Choral', duration:'5 min', note:'A Provençal scene for soprano, mixed chorus, and orchestra.'},
+  {title:'Alyssa', original:'Cantate', year:1903, m:'M.38', genre:'Choral', duration:'18 min', note:'Ravel’s final completed Prix de Rome cantata.'},
+  {title:'Manteau de fleurs', original:'Manteau de fleurs', year:1903, m:'M.39', genre:'Vocal', duration:'4 min', note:'A lyrical song on a poem by Paul Gravollet.'},
+  {title:'Menuet in C-sharp minor', original:'Menuet en ut dièse mineur', year:1904, m:'M.42', genre:'Piano', duration:'0:55', note:'A brief and delicately poised piano minuet.'},
+  {title:'L’Aurore', original:'L’Aurore', year:1905, m:'M.45', genre:'Choral', duration:'13 min', note:'Ravel’s last Prix de Rome submission, for tenor, chorus, and orchestra.'},
+  {title:'Cinq mélodies populaires grecques', original:'Five Greek Folk Songs', year:1906, m:'M.A4–A5/A9–A11', genre:'Vocal', duration:'8 min', note:'Five vivid Greek folk-song arrangements in French translation.'},
+  {title:'Noël des jouets', original:'Noël des jouets', year:1905, m:'M.47', genre:'Vocal', duration:'4 min', note:'Ravel’s own text animates a tiny Christmas toy world.'},
+  {title:'Les grands vents venus d’outre-mer', original:'Les grands vents venus d’outre-mer', year:1906, m:'M.48', genre:'Vocal', duration:'3 min', note:'An impassioned setting of Henri de Régnier.'},
+  {title:'Vocalise-étude en forme de habanera', original:'Pièce en forme de habanera', year:1907, m:'M.51', genre:'Vocal', duration:'3 min', note:'A wordless vocal study whose sinuous melody became widely transcribed.'},
+  {title:'L’Heure espagnole', original:'Comédie musicale', year:1911, m:'M.52', genre:'Stage', duration:'50 min', note:'Ravel’s witty one-act opera unfolds among the clocks of a Toledo shop.'},
+  {title:'Sur l’herbe', original:'Sur l’herbe', year:1907, m:'M.53', genre:'Vocal', duration:'3 min', note:'A playful and conversational setting of Verlaine.'},
+  {title:'Menuet sur le nom d’Haydn', original:'Menuet sur le nom d’Haydn', year:1909, m:'M.58', genre:'Piano', duration:'2 min', note:'A musical cryptogram built from the letters of Haydn’s name.'},
+  {title:'Chants populaires', original:'Four Folk Songs', year:1910, m:'M.A17', genre:'Vocal', duration:'8 min', note:'Spanish, French, Italian, and Hebrew folk songs arranged for voice and piano.'},
+  {title:'Adélaïde, ou le langage des fleurs', original:'Ballet', year:1912, m:'M.61a', genre:'Stage', duration:'17 min', note:'A ballet fashioned from Valses nobles et sentimentales.'},
+  {title:'À la manière de…', original:'Borodine · Chabrier', year:1913, m:'M.63', genre:'Piano', duration:'4 min', note:'Two affectionate piano pastiches in the manners of Borodin and Chabrier.'},
+  {title:'Prélude', original:'Prélude pour piano', year:1913, m:'M.65', genre:'Piano', duration:'2 min', note:'A tiny, enigmatic prelude composed as a sight-reading test.'},
+  {title:'Deux mélodies hébraïques', original:'Kaddisch · L’Énigme éternelle', year:1914, m:'M.A22', genre:'Vocal', duration:'8 min', note:'Two Hebrew melodies of prayer and philosophical questioning.'},
+  {title:'Trois chansons', original:'Nicolette · Trois beaux oiseaux · Ronde', year:1915, m:'M.69', genre:'Choral', duration:'7 min', note:'Ravel wrote both words and music for this a cappella choral triptych.'},
+  {title:'Frontispice', original:'Frontispice', year:1918, m:'M.70', genre:'Piano', duration:'2 min', note:'An extraordinary miniature for five hands at two pianos.'},
+  {title:'Berceuse sur le nom de Gabriel Fauré', original:'Berceuse', year:1922, m:'M.74', genre:'Chamber', duration:'3 min', note:'A violin-and-piano tribute encoded from Fauré’s name.'},
+  {title:'Ronsard à son âme', original:'Ronsard à son âme', year:1924, m:'M.75', genre:'Vocal', duration:'3 min', note:'A spare song written for the four-hundredth anniversary of Ronsard’s birth.'},
+  {title:'Tzigane', original:'Rapsodie de concert', year:1924, m:'M.76', genre:'Chamber', duration:'10 min', note:'A dazzling concert rhapsody inspired by Hungarian-Gypsy violin traditions.'},
+  {title:'Rêves', original:'Rêves', year:1927, m:'M.79', genre:'Vocal', duration:'4 min', note:'A dreamlike late song setting Léon-Paul Fargue.'},
+  {title:'Fanfare', original:'L’Éventail de Jeanne', year:1927, m:'M.80', genre:'Orchestral', duration:'2 min', note:'Ravel’s brilliant miniature contribution to a collaborative children’s ballet.'}
+];
+
+const youtubeIds = {
+  'Menuet antique':'1I3mizd65DA', 'Pavane for a Dead Princess':'GKkeDqJBlK8', 'Jeux d’eau':'Z1QrFd7lNcU',
+  'String Quartet in F major':'ieRQyyPowH0', 'Shéhérazade':'mkGPGJzZuMk', 'Sonatine':'0CkAWeAmORc',
+  'Miroirs':'0VdZR3deNdI', 'Introduction and Allegro':'rv5vXFaKkIg', 'Histoires naturelles':'MVt0yvme0f4',
+  'Rapsodie espagnole':'bbIAPqQcWkQ', 'Gaspard de la nuit':'n_yIgrkSNzE', 'Ma mère l’Oye':'N_ENSdLOblk',
+  'Valses nobles et sentimentales':'jXhHjfHRDnk', 'Daphnis et Chloé':'K0o_79U0XHw',
+  'Trois poèmes de Mallarmé':'UPdsPhSQy58', 'Piano Trio in A minor':'3QzLA5se4co',
+  'Le Tombeau de Couperin':'iou0OPabKYs', 'La Valse':'CeomfSaTHzc',
+  'Sonata for Violin and Cello':'-z_Ee3E3C0Q', 'L’Enfant et les sortilèges':'Y-YwjICCLN0',
+  'Chansons madécasses':'bb1Swd9xrl0', 'Violin Sonata No. 2':'OFbffshku0k', 'Boléro':'cmNEvSFWftc',
+  'Piano Concerto for the Left Hand':'ZbEtk1kdYx4', 'Piano Concerto in G major':'cJOW5mlhH_Y',
+  'Don Quichotte à Dulcinée':'wK6ls3P-0XE',
+  'Ballade de la reine morte d’aimer':'-GyGs6vB0Ng', 'Sérénade grotesque':'oQPRWvAjxIA',
+  'Un grand sommeil noir':'GX1joQezHgs', 'Sites auriculaires':'KIz1ekvmjCg', 'Sainte':'FeLXHW-l-qo',
+  'D’Anne jouant de l’espinette':'2JkSjbi9UEc', 'La Parade':'G1l3lBFad2E',
+  'Violin Sonata No. 1':'nMT-xzT9Ujg', 'Chanson du rouet':'NRRcpWa0hTo', 'Si morne !':'7pbXh7-E32Y',
+  'Shéhérazade Overture':'RTVTHshHkPA', 'D’Anne qui me jecta de la neige':'FlIE4W4Dmx8',
+  'Callirhoé':'XFNZDH8gUBI', 'Four Fugues':'tN6rW_GjGw4', 'Les Bayadères':'p53TUA0V20Y',
+  'Tout est lumière':'npoJCRDufQ4', 'Myrrha':'nN3tliSIFMQ', 'Sémiramis':'Gr5axIFtPnI',
+  'La Nuit':'NJ1PqbeNts8', 'Alcyone':'2neTKPcuh0Q', 'Matinée de Provence':'q-edwQ06SJs',
+  'Alyssa':'hfyCjQiPir8', 'Manteau de fleurs':'ug46t2XLOC4', 'Menuet in C-sharp minor':'O5l_f9b59Is',
+  'L’Aurore':'u66RecLACuI', 'Cinq mélodies populaires grecques':'njMFaF9gVwM',
+  'Noël des jouets':'ZEx3MC2EhEw', 'Les grands vents venus d’outre-mer':'jgWi3BsvblQ',
+  'Vocalise-étude en forme de habanera':'126a3mp9v0E', 'L’Heure espagnole':'F8ZFlx8jRjo',
+  'Sur l’herbe':'sSeJtcJ-uOA', 'Menuet sur le nom d’Haydn':'xCXafUomRN4',
+  'Chants populaires':'b9NgljaQG3A', 'Adélaïde, ou le langage des fleurs':'AlMvYetI_-o',
+  'À la manière de…':'E4jTZFgkGaE', 'Prélude':'ciGt6IIngRk',
+  'Deux mélodies hébraïques':'f-KwKi7CM-E', 'Trois chansons':'AHZctP9hbsg',
+  'Frontispice':'ATT-1vmZZAk', 'Berceuse sur le nom de Gabriel Fauré':'ULnCsIFfa7E',
+  'Ronsard à son âme':'BMK28fazev4', 'Tzigane':'GWmTTudtlbY', 'Rêves':'trwdNflvikA',
+  'Fanfare':'9gDWnlwxwWk'
+};
+
+// Exact runtimes, in seconds, read from each linked video's published metadata.
+const videoSeconds = {
+  '1I3mizd65DA':475,'GKkeDqJBlK8':407,'Z1QrFd7lNcU':343,'ieRQyyPowH0':1725,'mkGPGJzZuMk':952,
+  '0CkAWeAmORc':711,'0VdZR3deNdI':1717,'rv5vXFaKkIg':622,'MVt0yvme0f4':1001,'bbIAPqQcWkQ':966,
+  'n_yIgrkSNzE':1340,'N_ENSdLOblk':1202,'jXhHjfHRDnk':914,'K0o_79U0XHw':3361,'UPdsPhSQy58':746,
+  '3QzLA5se4co':1663,'iou0OPabKYs':1062,'CeomfSaTHzc':823,'-z_Ee3E3C0Q':1222,'Y-YwjICCLN0':2709,
+  'bb1Swd9xrl0':790,'OFbffshku0k':985,'cmNEvSFWftc':893,'ZbEtk1kdYx4':1114,'cJOW5mlhH_Y':1419,
+  'wK6ls3P-0XE':399,'-GyGs6vB0Ng':244,'oQPRWvAjxIA':241,'GX1joQezHgs':218,'KIz1ekvmjCg':311,
+  'FeLXHW-l-qo':143,'2JkSjbi9UEc':104,'G1l3lBFad2E':708,'nMT-xzT9Ujg':816,'NRRcpWa0hTo':233,
+  '7pbXh7-E32Y':282,'RTVTHshHkPA':758,'FlIE4W4Dmx8':146,'XFNZDH8gUBI':576,'tN6rW_GjGw4':1157,
+  'p53TUA0V20Y':255,'npoJCRDufQ4':340,'nN3tliSIFMQ':1388,'Gr5axIFtPnI':460,'NJ1PqbeNts8':328,
+  '2neTKPcuh0Q':1521,'q-edwQ06SJs':238,'hfyCjQiPir8':1527,'ug46t2XLOC4':227,'O5l_f9b59Is':55,
+  'u66RecLACuI':510,'njMFaF9gVwM':435,'ZEx3MC2EhEw':236,'jgWi3BsvblQ':140,'126a3mp9v0E':179,
+  'F8ZFlx8jRjo':3170,'sSeJtcJ-uOA':120,'xCXafUomRN4':157,'b9NgljaQG3A':612,'AlMvYetI_-o':1181,
+  'E4jTZFgkGaE':228,'ciGt6IIngRk':123,'f-KwKi7CM-E':468,'AHZctP9hbsg':388,'ATT-1vmZZAk':130,
+  'ULnCsIFfa7E':197,'BMK28fazev4':159,'GWmTTudtlbY':550,'trwdNflvikA':86,'9gDWnlwxwWk':81
+};
+
+function videoDuration(work) {
+  const seconds = videoSeconds[youtubeIds[work.title]];
+  return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+}
+
+const genreOrder = ['Piano', 'Vocal', 'Choral', 'Chamber', 'Orchestral', 'Stage', 'Concerto'];
+const genres = ['All', ...genreOrder.filter(genre => works.some(work => work.genre === genre))];
+let activeGenre = 'All';
+const grid = document.querySelector('#workGrid');
+const search = document.querySelector('#search');
+const filters = document.querySelector('#filters');
+let sortKey = 'year';
+let sortDirection = 'asc';
+
+function youtubeUrl(work) {
+  return `https://www.youtube.com/watch?v=${youtubeIds[work.title]}`;
+}
+
+filters.innerHTML = genres.map(g => `<button class="filter-btn${g === 'All' ? ' active' : ''}" data-genre="${g}" type="button">${g}</button>`).join('');
+
+function visibleWorks() {
+  const q = search.value.trim().toLowerCase();
+  const list = works.filter(w => (activeGenre === 'All' || w.genre === activeGenre) &&
+    (!q || `${w.title} ${w.original} ${w.year} ${w.m} ${w.genre}`.toLowerCase().includes(q)));
+  return list.sort((a, b) => {
+    let aValue = a[sortKey];
+    let bValue = b[sortKey];
+    if (sortKey === 'm') {
+      aValue = Number(aValue.replace(/\D/g, ''));
+      bValue = Number(bValue.replace(/\D/g, ''));
+    } else if (sortKey === 'duration') {
+      aValue = videoSeconds[youtubeIds[a.title]];
+      bValue = videoSeconds[youtubeIds[b.title]];
+    }
+    const comparison = typeof aValue === 'number'
+      ? aValue - bValue
+      : aValue.localeCompare(bValue, undefined, { sensitivity: 'base' });
+    return sortDirection === 'asc' ? comparison : -comparison;
+  });
+}
+
+function render() {
+  const list = visibleWorks();
+  document.querySelector('#resultCount').textContent = `${list.length} ${list.length === 1 ? 'work' : 'works'}`;
+  document.querySelector('#empty').hidden = list.length > 0;
+  grid.innerHTML = list.map((w, i) => `<tr title="${w.note.replaceAll('"','&quot;')}">
+    <td class="row-number">${String(i+1).padStart(2,'0')}</td>
+    <td class="work-title"><strong>${w.title}</strong><em>${w.original}</em></td>
+    <td>${w.year}</td><td>${w.m}</td><td>${w.genre}</td><td>${videoDuration(w)}</td>
+    <td><a class="table-listen" href="${youtubeUrl(w)}" target="_blank" rel="noopener" aria-label="Listen to ${w.title} on YouTube"><span>Listen</span> ▶</a></td>
+  </tr>`).join('');
+}
+
+filters.addEventListener('click', e => { if (!e.target.matches('button')) return; activeGenre = e.target.dataset.genre; filters.querySelectorAll('button').forEach(b => b.classList.toggle('active', b === e.target)); render(); });
+search.addEventListener('input', render);
+document.querySelector('.works-table thead').addEventListener('click', event => {
+  const button = event.target.closest('.sort-header');
+  if (!button) return;
+  const nextKey = button.dataset.sort;
+  sortDirection = sortKey === nextKey && sortDirection === 'asc' ? 'desc' : 'asc';
+  sortKey = nextKey;
+
+  document.querySelectorAll('.sort-header').forEach(header => {
+    const active = header === button;
+    header.classList.toggle('active', active);
+    header.closest('th').setAttribute('aria-sort', active ? (sortDirection === 'asc' ? 'ascending' : 'descending') : 'none');
+    header.querySelector('span').textContent = active ? (sortDirection === 'asc' ? '↑' : '↓') : '↕';
+  });
+  render();
+});
+document.querySelector('#randomBtn').addEventListener('click', () => {
+  const work = works[Math.floor(Math.random()*works.length)];
+  window.open(youtubeUrl(work), '_blank', 'noopener');
+});
+render();
+
+  </script>
+</body>
+</html>
