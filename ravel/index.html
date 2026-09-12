@@ -168,8 +168,22 @@ const youtubeIds = {
   'Fanfare':'9gDWnlwxwWk'
 };
 
-// Exact runtimes, in seconds, read from each linked video's published metadata.
+// Complete single-piece recordings by Seong-Jin Cho.
+const choPlaylist = 'PLzwBAX6_mXamamySpIzOmj9TpST_JS_8Z';
+const choRecordings = {
+  'Sérénade grotesque':'veATnRK6DoA',
+  'Menuet antique':'1tT5GvnkYLc',
+  'Pavane for a Dead Princess':'Dac2-93eeZQ',
+  'Jeux d’eau':'iVUj-IvnhO8',
+  'Menuet sur le nom d’Haydn':'89SCKxjNL5E',
+  'Prélude':'_8N3XQ2P33k'
+};
+Object.assign(youtubeIds, choRecordings);
+
+// Exact runtimes, in seconds, of the linked videos.
 const videoSeconds = {
+  'veATnRK6DoA':206,'1tT5GvnkYLc':359,'Dac2-93eeZQ':399,'iVUj-IvnhO8':334,
+  '89SCKxjNL5E':115,'_8N3XQ2P33k':92,
   '1I3mizd65DA':475,'GKkeDqJBlK8':407,'Z1QrFd7lNcU':343,'ieRQyyPowH0':1725,'mkGPGJzZuMk':952,
   '0CkAWeAmORc':711,'0VdZR3deNdI':1717,'rv5vXFaKkIg':622,'MVt0yvme0f4':1001,'bbIAPqQcWkQ':966,
   'n_yIgrkSNzE':1340,'N_ENSdLOblk':1202,'jXhHjfHRDnk':914,'K0o_79U0XHw':3361,'UPdsPhSQy58':746,
@@ -201,7 +215,8 @@ let sortKey = 'year';
 let sortDirection = 'asc';
 
 function youtubeUrl(work) {
-  return `https://www.youtube.com/watch?v=${youtubeIds[work.title]}`;
+  const playlist = choRecordings[work.title] ? `&list=${choPlaylist}` : '';
+  return `https://www.youtube.com/watch?v=${youtubeIds[work.title]}${playlist}`;
 }
 
 filters.innerHTML = genres.map(g => `<button class="filter-btn${g === 'All' ? ' active' : ''}" data-genre="${g}" type="button">${g}</button>`).join('');
