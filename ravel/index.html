@@ -182,6 +182,7 @@ Object.assign(youtubeIds, choRecordings);
 
 // Exact runtimes, in seconds, of the linked videos.
 const videoSeconds = {
+  'VKjeUTgbcyA':686,
   'veATnRK6DoA':206,'1tT5GvnkYLc':359,'Dac2-93eeZQ':399,'iVUj-IvnhO8':334,
   '89SCKxjNL5E':115,'_8N3XQ2P33k':92,
   '1I3mizd65DA':475,'GKkeDqJBlK8':407,'Z1QrFd7lNcU':343,'ieRQyyPowH0':1725,'mkGPGJzZuMk':952,
@@ -202,7 +203,9 @@ const videoSeconds = {
 
 function videoDuration(work) {
   const seconds = videoSeconds[youtubeIds[work.title]];
-  return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+  return Number.isFinite(seconds)
+    ? `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`
+    : '—';
 }
 
 const genreOrder = ['Piano', 'Vocal', 'Choral', 'Chamber', 'Orchestral', 'Stage', 'Concerto'];
@@ -234,6 +237,10 @@ function visibleWorks() {
     } else if (sortKey === 'duration') {
       aValue = videoSeconds[youtubeIds[a.title]];
       bValue = videoSeconds[youtubeIds[b.title]];
+      // Keep unknown runtimes last in either sort direction.
+      if (!Number.isFinite(aValue) || !Number.isFinite(bValue)) {
+        return Number(Number.isFinite(bValue)) - Number(Number.isFinite(aValue));
+      }
     }
     const comparison = typeof aValue === 'number'
       ? aValue - bValue
