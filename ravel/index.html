@@ -82,7 +82,7 @@ const works = [
   {title:'Le Tombeau de Couperin', original:'Le Tombeau de Couperin', year:1917, m:'M.68', genre:'Piano', duration:'25 min', note:'A graceful Baroque suite, each movement dedicated to a friend lost in the First World War.'},
   {title:'La Valse', original:'Poème chorégraphique', year:1920, m:'M.72', genre:'Orchestral', duration:'13 min', note:'The Viennese waltz materializes, whirls with dangerous splendour, and finally tears itself apart.'},
   {title:'Sonata for Violin and Cello', original:'Sonate pour violon et violoncelle', year:1922, m:'M.73', genre:'Chamber', duration:'21 min', note:'Spare, acerbic counterpoint dedicated to the memory of Claude Debussy.'},
-  {title:'L’Enfant et les sortilèges', original:'Fantaisie lyrique en deux parties', year:1925, m:'M.71', genre:'Stage', duration:'45 min', note:'Colette’s unruly child meets singing furniture and wounded creatures in Ravel’s magical one-act opera.'},
+  {title:'L’Enfant et les sortilèges', original:'Fantaisie lyrique en deux parties', year:1925, m:'M.71', genre:'Opera', duration:'45 min', note:'Colette’s unruly child meets singing furniture and wounded creatures in Ravel’s magical one-act opera.'},
   {title:'Chansons madécasses', original:'Chansons madécasses', year:1926, m:'M.78', genre:'Vocal', duration:'13 min', note:'Three intense songs for voice, flute, cello, and piano—among Ravel’s most daring chamber textures.'},
   {title:'Violin Sonata No. 2', original:'Sonate pour violon et piano', year:1927, m:'M.77', genre:'Chamber', duration:'18 min', note:'Ravel emphasizes the instruments’ incompatibility, even introducing American blues in the central movement.'},
   {title:'Boléro', original:'Boléro pour orchestre', year:1928, m:'M.81', genre:'Orchestral', duration:'15 min', note:'One rhythm, two melodies, and an immense unbroken crescendo: Ravel’s famous experiment in orchestral colour.'},
@@ -118,7 +118,7 @@ const works = [
   {title:'Noël des jouets', original:'Noël des jouets', year:1905, m:'M.47', genre:'Vocal', duration:'4 min', note:'Ravel’s own text animates a tiny Christmas toy world.'},
   {title:'Les grands vents venus d’outre-mer', original:'Les grands vents venus d’outre-mer', year:1906, m:'M.48', genre:'Vocal', duration:'3 min', note:'An impassioned setting of Henri de Régnier.'},
   {title:'Vocalise-étude en forme de habanera', original:'Pièce en forme de habanera', year:1907, m:'M.51', genre:'Vocal', duration:'3 min', note:'A wordless vocal study whose sinuous melody became widely transcribed.'},
-  {title:'L’Heure espagnole', original:'Comédie musicale', year:1911, m:'M.52', genre:'Stage', duration:'50 min', note:'Ravel’s witty one-act opera unfolds among the clocks of a Toledo shop.'},
+  {title:'L’Heure espagnole', original:'Comédie musicale', year:1911, m:'M.52', genre:'Opera', duration:'50 min', note:'Ravel’s witty one-act opera unfolds among the clocks of a Toledo shop.'},
   {title:'Sur l’herbe', original:'Sur l’herbe', year:1907, m:'M.53', genre:'Vocal', duration:'3 min', note:'A playful and conversational setting of Verlaine.'},
   {title:'Menuet sur le nom d’Haydn', original:'Menuet sur le nom d’Haydn', year:1909, m:'M.58', genre:'Piano', duration:'2 min', note:'A musical cryptogram built from the letters of Haydn’s name.'},
   {title:'Chants populaires', original:'Four Folk Songs', year:1910, m:'M.A17', genre:'Vocal', duration:'8 min', note:'Spanish, French, Italian, and Hebrew folk songs arranged for voice and piano.'},
@@ -208,7 +208,7 @@ function videoDuration(work) {
     : '—';
 }
 
-const genreOrder = ['Piano', 'Vocal', 'Choral', 'Chamber', 'Orchestral', 'Stage', 'Concerto'];
+const genreOrder = ['Piano', 'Vocal', 'Choral', 'Chamber', 'Orchestral', 'Stage', 'Opera', 'Concerto'];
 const genres = ['All', ...genreOrder.filter(genre => works.some(work => work.genre === genre))];
 let activeGenre = 'All';
 const grid = document.querySelector('#workGrid');
