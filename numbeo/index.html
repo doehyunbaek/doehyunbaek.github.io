@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Explore the world's cities by cost of living and quality of life, using Numbeo percentile rankings.">
+<title>World’s Best and Worst Cities for Value</title>
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<main>
+  <header>
+    <h1>World’s Best and Worst Cities for Value</h1>
+    <p class="subtitle">Cost of Living vs. Quality of Life</p>
+  </header>
+  <section class="controls" aria-label="Chart controls">
+    <label class="view-toggle">View <select id="view"><option value="selected">Selected cities</option><option value="all">All cities</option></select></label>
+    <label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Find a city or country…" aria-label="Find a city or country" autocomplete="off"></label>
+    <label class="label-toggle"><input id="labels" type="checkbox"> All city labels</label>
+    <button id="reset" type="button">Reset</button>
+    <button id="download" type="button">Save SVG <span aria-hidden="true">↓</span></button>
+  </section>
+  <div id="legend" class="legend" role="group" aria-label="Toggle regions"></div>
+  <div class="chart-wrap">
+    <svg id="chart" viewBox="0 0 1100 890" role="img" aria-labelledby="chart-title chart-desc">
+      <title id="chart-title">Cost of living versus quality of life by city</title>
+      <desc id="chart-desc">Each dot represents a city. Cheaper cities are to the left and higher quality of life is at the top. Dashed lines mark the 50th percentiles.</desc>
+    </svg>
+    <div id="tooltip" role="status" hidden></div>
+  </div>
+  <div class="chart-bottom"><p id="summary" aria-live="polite">Loading rankings…</p><p>Hover or tap a city to explore.</p></div>
+  <footer>
+    <p class="data-source">Both axes are percentile ranks among <span id="count">—</span> cities from <a href="https://www.numbeo.com/quality-of-life/rankings.jsp" target="_blank" rel="noopener">Numbeo’s rankings</a> · <span id="edition">—</span>.</p>
+    <p>Quality of life is Numbeo’s own formula with its price-linked terms removed: safety, healthcare, traffic, pollution, climate.</p>
+    <details><summary>Methodology</summary><p>The reference’s footnote specifies removing price-linked terms. Using <a href="https://www.numbeo.com/quality-of-life/indices_explained.jsp" target="_blank" rel="noopener">Numbeo’s published formula</a>, the resulting score is:</p><p><code>100 + safety / 2 + healthcare / 2.5 − commute / 2 − pollution × 2 / 3 + climate / 3</code></p><p>Purchasing power / 2.5, housing price-to-income ratio, and −cost of living / 10 are excluded. The constant 100 does not affect ranks. We rank this derived score for Y and the unadjusted Cost of Living Index for X. All positions are computed from scraped data—none are transcribed from the image. The default displays cities selected in the reference; “All cities” reveals the complete dataset, and search can find any city.</p><p>Each index is ranked within the full dataset: percentile = (average rank − 1) / (city count − 1) × 100. Tied index values share an average rank. Region filters and search never change these percentiles. The four quadrants split at the median (50th percentile), not at an absolute standard of affordability or well-being.</p><p>The layout is a recreation of the supplied reference graphic, credited there to Valerii Emelianov. This chart uses a fresh Numbeo snapshot, so positions and city counts may differ. Regional groupings follow the reference’s visual categories; “CIS” is a broad post-Soviet grouping, not a statement of current membership.</p></details>
+  </footer>
+</main>
+</body>
+</html>
