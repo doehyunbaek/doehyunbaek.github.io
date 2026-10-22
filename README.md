@@ -1,11 +1,6 @@
 # Personal website
 
-## Civilization IV archive
+The Civilization IV archive is maintained in its own repository:
+https://github.com/doehyunbaek/civ4
 
-`civ4/data/civ4-runs.json` is the single source of truth for run records.
-The Runs tab in `civ4/index.html` fetches this file directly; edit the JSON
-when correcting run metadata rather than embedding records in the HTML.
-The request revalidates cached data on each page load.
-
-Serve the site over HTTP for local previews (fetching JSON does not work
-reliably when opening the HTML via `file://`).
+Live archive: https://doehyunbaek.github.io/civ4/
